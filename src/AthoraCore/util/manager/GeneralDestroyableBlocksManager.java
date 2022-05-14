@@ -75,25 +75,47 @@ public class GeneralDestroyableBlocksManager {
                 int delayForRespawn = config.getInt("settings." + getBlockName(entry.getKey().getId()) + ".spawnInterval");
                 if ((currentTime - entry.getValue()) >= delayForRespawn) {
                     Vector3 blockLocation = entry.getKey().getLocation();
-                    Block sourceBlock = null;
-                    for (int i = 0; i < blockLocation.y; i++) {
-                        Block block = entry.getKey().getLevel().getBlock((int) blockLocation.x, (int) (blockLocation.y - i), (int) blockLocation.z);
-                        if (getLocationIndexInStorage(block.getLocation()) != -1) {
-                            sourceBlock = block;
-                            break;
-                        }
-                    }
 
-                    if (sourceBlock != null) {
-                        placeBlock(sourceBlock.getLevel(), sourceBlock.getLocation(), entry.getKey().getId());
-                        blocksToRemove = Helper.append(blocksToRemove, entry.getKey());
-                    }else {
-                        Server.getInstance().getLogger().error("Tryed to respawn a Block but found not the source Block!");
+                    // brain fuck for resetting cactus and sugar cane structure
+                    if (entry.getKey().getId() == CACTUS_BLOCK || entry.getKey().getId() == SUGAR_CANE_BLOCK) {
+
+                        int maxHeight = config.getInt("settings." + getBlockName(entry.getKey().getId()) + ".max_height");
+                        int minY = (int) entry.getKey().y - maxHeight;
+                        int maxY = (int) entry.getKey().y + maxHeight;
+                        Block sourceBlock = null;
+
+                        for (int i = minY; i < maxY + 1; i++) {
+                            Block block = entry.getKey().getLevel().getBlock((int) blockLocation.x, i, (int) blockLocation.z);
+
+                            if (!placedBlocks.containsKey(block)) {
+                                continue;
+                            }
+
+                            if (sourceBlock == null) {
+                                if (getLocationIndexInStorage(block.getLocation()) != -1) {
+                                    sourceBlock = block;
+                                }
+                            }
+
+                            if (destroyedBlocks.containsKey(block)) {
+                                blocksToRemove = Helper.append(blocksToRemove, block);
+                            }
+
+                            block.getLevel().setBlockIdAt((int) block.x, (int) block.y, (int) block.z, BlockID.AIR);
+                            block.getLevel().setBlockDataAt((int) block.x, (int) block.y, (int) block.z, 0);
+
+                            placedBlocks.remove(block);
+                        }
+                        if (sourceBlock != null) {
+                            placeBlock(sourceBlock.getLevel(), sourceBlock.getLocation(), entry.getKey().getId());
+                            blocksToRemove = Helper.append(blocksToRemove, entry.getKey());
+                        } else {
+                            Server.getInstance().getLogger().error("Tryed to respawn a Block but found not the source Block!");
+                        }
                     }
                 }
             }
             for (Block blockToRemove : blocksToRemove) {
-                placedBlocks.replace(blockToRemove, true);
                 destroyedBlocks.remove(blockToRemove);
             }
         }
@@ -347,7 +369,7 @@ public class GeneralDestroyableBlocksManager {
     }
 
     public static double getRuhmPerBlock(Block block) {
-        if (config.exists("settings." + getBlockName(block.getId()) + ".ruhm")){
+        if (config.exists("settings." + getBlockName(block.getId()) + ".ruhm")) {
             return config.getDouble("settings." + getBlockName(block.getId()) + ".ruhm");
         }
         return 0.0;
