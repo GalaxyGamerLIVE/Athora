@@ -101,12 +101,12 @@ public class GeneralDestroyableBlocksManager {
     }
 
     public static void placeSetupBlock(Level level, Block targetBlock) {
+        boolean working = true;
+        int height = 1;
         switch (targetBlock.getId()) {
             case CACTUS_BLOCK:
                 level.setBlockIdAt((int) targetBlock.x, (int) targetBlock.y, (int) targetBlock.z, BlockID.MAGENTA_GLAZED_TERRACOTTA);
                 level.setBlockDataAt((int) targetBlock.x, (int) targetBlock.y, (int) targetBlock.z, 5);
-                boolean working = true;
-                int height = 1;
                 do {
                     Block block = level.getBlock((int) targetBlock.x, (int) (targetBlock.y + height), (int) targetBlock.z);
                     if (block.getId() == CACTUS_BLOCK) {
@@ -119,7 +119,18 @@ public class GeneralDestroyableBlocksManager {
                 } while (working);
                 break;
             case SUGAR_CANE_BLOCK:
-                //min max
+                level.setBlockIdAt((int) targetBlock.x, (int) targetBlock.y, (int) targetBlock.z, BlockID.MAGENTA_GLAZED_TERRACOTTA);
+                level.setBlockDataAt((int) targetBlock.x, (int) targetBlock.y, (int) targetBlock.z, 5);
+                do {
+                    Block block = level.getBlock((int) targetBlock.x, (int) (targetBlock.y + height), (int) targetBlock.z);
+                    if (block.getId() == SUGAR_CANE_BLOCK) {
+                        level.setBlockIdAt((int) targetBlock.x, (int) targetBlock.y + height, (int) targetBlock.z, BlockID.AIR);
+                        level.setBlockDataAt((int) targetBlock.x, (int) targetBlock.y + height, (int) targetBlock.z, 0);
+                        height++;
+                    } else {
+                        working = false;
+                    }
+                } while (working);
                 break;
             default:
                 level.setBlockIdAt((int) targetBlock.x, (int) targetBlock.y, (int) targetBlock.z, BlockID.MAGENTA_GLAZED_TERRACOTTA);
@@ -128,11 +139,12 @@ public class GeneralDestroyableBlocksManager {
     }
 
     public static void placeBlock(Level level, Vector3 destination, int targetBlockID) {
+        int randomHeight;
         switch (targetBlockID) {
             case CACTUS_BLOCK:
                 level.setBlockIdAt((int) destination.x, (int) destination.y, (int) destination.z, CACTUS_BLOCK);
                 level.setBlockDataAt((int) destination.x, (int) destination.y, (int) destination.z, 1);
-                int randomHeight = Helper.getRandomIntBetween(config.getInt("settings." + getBlockName(CACTUS_BLOCK) + ".min_height"), config.getInt("settings." + getBlockName(CACTUS_BLOCK) + ".max_height"));
+                randomHeight = Helper.getRandomIntBetween(config.getInt("settings." + getBlockName(CACTUS_BLOCK) + ".min_height"), config.getInt("settings." + getBlockName(CACTUS_BLOCK) + ".max_height"));
                 for (int i = 1; i < randomHeight + 1; i++) {
                     level.setBlockIdAt((int) destination.x, (int) destination.y + i, (int) destination.z, CACTUS_BLOCK);
                     level.setBlockDataAt((int) destination.x, (int) destination.y + i, (int) destination.z, 0);
@@ -155,7 +167,13 @@ public class GeneralDestroyableBlocksManager {
                 level.setBlockDataAt((int) destination.x, (int) destination.y, (int) destination.z, 0);
                 break;
             case SUGAR_CANE_BLOCK:
-                //min max
+                level.setBlockIdAt((int) destination.x, (int) destination.y, (int) destination.z, SUGAR_CANE_BLOCK);
+                level.setBlockDataAt((int) destination.x, (int) destination.y, (int) destination.z, 0);
+                randomHeight = Helper.getRandomIntBetween(config.getInt("settings." + getBlockName(SUGAR_CANE_BLOCK) + ".min_height"), config.getInt("settings." + getBlockName(SUGAR_CANE_BLOCK) + ".max_height"));
+                for (int i = 1; i < randomHeight + 1; i++) {
+                    level.setBlockIdAt((int) destination.x, (int) destination.y + i, (int) destination.z, SUGAR_CANE_BLOCK);
+                    level.setBlockDataAt((int) destination.x, (int) destination.y + i, (int) destination.z, 0);
+                }
                 break;
             case COCO_BEANS_BLOCK:
                 level.setBlockIdAt((int) destination.x, (int) destination.y, (int) destination.z, COCO_BEANS_BLOCK);
