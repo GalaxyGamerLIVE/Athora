@@ -22,8 +22,7 @@ public class GeneralDestroyableBlocksSetupCommand extends PluginCommand<Main> {
                 CommandParameter.newEnum("SetupExit", new CommandEnum("GeneralDestroyableBlocksManagerBlock", "exit")),
         });
         for (int blockID : GeneralDestroyableBlocksManager.destroyableBlocks) {
-            String blockName = Block.get(blockID).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
+            String blockName = GeneralDestroyableBlocksManager.getBlockName(blockID);
             this.commandParameters.put("farm->setup->" + blockName, new CommandParameter[]{
                     CommandParameter.newEnum("GeneralBlock", new CommandEnum("GeneralDestroyableBlocksManagerBlock", blockName)),
             });
@@ -39,8 +38,7 @@ public class GeneralDestroyableBlocksSetupCommand extends PluginCommand<Main> {
         StringBuilder helpMessage = new StringBuilder(Vars.PREFIX + TextFormat.RED + "Benutze: /generalblockssetup [");
         for (int i = 0; i < GeneralDestroyableBlocksManager.destroyableBlocks.length; i++) {
             int blockID = GeneralDestroyableBlocksManager.destroyableBlocks[i];
-            String blockName = Block.get(blockID).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
+            String blockName = GeneralDestroyableBlocksManager.getBlockName(blockID);
             if (i == GeneralDestroyableBlocksManager.destroyableBlocks.length - 1) {
                 helpMessage.append(blockName + "]");
             } else {

@@ -70,8 +70,6 @@ public class PlayerDestroyBlocks implements Listener {
 
 
         } else if (MineManager.isBlockBreakable(event.getBlock()) && !BuildManager.getState(player) || MineSetupManager.isMineUnderSetup && MineManager.isPositionInMine(event.getBlock().getLocation())) {
-//            plugin.getLogger().info(event.getBlock().x + " " + event.getBlock().y + " " + event.getBlock().z);
-//            event.setCancelled(true);
             if (MineSetupManager.isMineUnderSetup) {
                 event.setCancelled(true);
                 if (MineSetupManager.mineSetupList.containsKey(player) && MineSetupManager.mineSetupList.get(player)) {
@@ -116,9 +114,6 @@ public class PlayerDestroyBlocks implements Listener {
         if (GeneralDestroyableBlocksManager.placedBlocks.containsKey(event.getBlock())) {
             event.setCancelled(true);
         }
-//        if (GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1) {
-//            event.setCancelled(true);
-//        }
     }
 
 }

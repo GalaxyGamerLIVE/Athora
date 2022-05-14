@@ -43,8 +43,7 @@ public class GeneralDestroyableBlocksManager {
         config = givenConfig;
         //setup default values
         for (int destroyableBlock : destroyableBlocks) {
-            String blockName = Block.get(destroyableBlock).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
+            String blockName = getBlockName(destroyableBlock);
             if (!config.exists("settings." + blockName)) {
                 Server.getInstance().getLogger().error("Found no settings for block '" + blockName + "' in generalBlocksConfig.yml");
                 config.set("settings." + blockName + ".ruhm", 1.0);
@@ -139,9 +138,7 @@ public class GeneralDestroyableBlocksManager {
 
     public static void renderSetupView(Level level) {
         for (int destroyableBlock : destroyableBlocks) {
-            String blockName = Block.get(destroyableBlock).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
-            List<String> locations = config.getStringList("storage." + blockName);
+            List<String> locations = config.getStringList("storage." + getBlockName(destroyableBlock));
             for (int i = 0; i < locations.size(); i++) {
                 String locationString = locations.get(i);
                 String[] locationCoords = locationString.split(" ");
@@ -158,9 +155,7 @@ public class GeneralDestroyableBlocksManager {
 
     public static void renderDefaultView(Level level) {
         for (int destroyableBlock : destroyableBlocks) {
-            String blockName = Block.get(destroyableBlock).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
-            List<String> locations = config.getStringList("storage." + blockName);
+            List<String> locations = config.getStringList("storage." + getBlockName(destroyableBlock));
             for (int i = 0; i < locations.size(); i++) {
                 String locationString = locations.get(i);
                 String[] locationCoords = locationString.split(" ");
@@ -244,11 +239,11 @@ public class GeneralDestroyableBlocksManager {
                 break;
             case SUGAR_CANE_BLOCK:
                 level.setBlockIdAt((int) destination.x, (int) destination.y, (int) destination.z, SUGAR_CANE_BLOCK);
-                level.setBlockDataAt((int) destination.x, (int) destination.y, (int) destination.z, 0);
+                level.setBlockDataAt((int) destination.x, (int) destination.y, (int) destination.z, 15);
                 randomHeight = Helper.getRandomIntBetween(config.getInt("settings." + getBlockName(SUGAR_CANE_BLOCK) + ".min_height"), config.getInt("settings." + getBlockName(SUGAR_CANE_BLOCK) + ".max_height"));
                 for (int i = 1; i < randomHeight + 1; i++) {
                     level.setBlockIdAt((int) destination.x, (int) destination.y + i, (int) destination.z, SUGAR_CANE_BLOCK);
-                    level.setBlockDataAt((int) destination.x, (int) destination.y + i, (int) destination.z, 0);
+                    level.setBlockDataAt((int) destination.x, (int) destination.y + i, (int) destination.z, 15);
                     Vector3 currentLocation = new Vector3(destination.x, destination.y + i, destination.z);
                     placedBlocks.put(level.getBlock(currentLocation), true);
                 }
@@ -305,8 +300,7 @@ public class GeneralDestroyableBlocksManager {
     public static void removeLocationFromOtherStorageSections(String blockSection, Block block) {
         String value = block.x + " " + block.y + " " + block.z;
         for (int destroyableBlock : destroyableBlocks) {
-            String blockName = Block.get(destroyableBlock).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
+            String blockName = getBlockName(destroyableBlock);
             if (!blockName.equals(blockSection)) {
                 int index = -1;
                 List<String> locations = config.getStringList("storage." + blockName);
@@ -353,10 +347,8 @@ public class GeneralDestroyableBlocksManager {
     public static int getLocationIndexInStorage(Location trackedLocation) {
         String trackedLocationString = trackedLocation.x + " " + trackedLocation.y + " " + trackedLocation.z;
         for (int destroyableBlock : destroyableBlocks) {
-            String blockName = Block.get(destroyableBlock).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
-            for (int i = 0; i < config.getStringList("storage." + blockName).size(); i++) {
-                if (config.getStringList("storage." + blockName).get(i).equalsIgnoreCase(trackedLocationString))
+            for (int i = 0; i < config.getStringList("storage." + getBlockName(destroyableBlock)).size(); i++) {
+                if (config.getStringList("storage." + getBlockName(destroyableBlock)).get(i).equalsIgnoreCase(trackedLocationString))
                     return i;
             }
         }
@@ -365,9 +357,7 @@ public class GeneralDestroyableBlocksManager {
 
     public static boolean isBlockNameInDestroyableBlocks(String name) {
         for (int blockID : destroyableBlocks) {
-            String blockName = Block.get(blockID).getPersistenceName();
-            blockName = blockName.substring(blockName.indexOf(":") + 1);
-            if (blockName.equalsIgnoreCase(name)) return true;
+            if (getBlockName(blockID).equalsIgnoreCase(name)) return true;
         }
         return false;
     }
@@ -380,6 +370,7 @@ public class GeneralDestroyableBlocksManager {
     }
 
     public static String getBlockName(int id) {
+        if (id == SUGAR_CANE_BLOCK) return "sugar_cane";
         String blockName = Block.get(id).getPersistenceName();
         blockName = blockName.substring(blockName.indexOf(":") + 1);
         return blockName;
