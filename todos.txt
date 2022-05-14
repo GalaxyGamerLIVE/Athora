@@ -1,0 +1,15 @@
+General Cooldown Stuff:
+    Blöcke:
+        - Kakteen       81  0   (1 beim block auf dem sand)
+        - Kürbiss       86  1
+        - Melonen       103 0
+        - Sand          12  0
+        - Kies          13  0
+        - Zuckerrohr    83  0
+        - Kakao         127 9
+        - Pilz rot      40  0
+        - Pilz braun    39  0
+        - Lehm          82  0
+    Setup Block: 222 5
+
+add bambo
