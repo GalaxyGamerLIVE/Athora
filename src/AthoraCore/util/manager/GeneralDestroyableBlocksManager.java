@@ -106,12 +106,16 @@ public class GeneralDestroyableBlocksManager {
 
                             placedBlocks.remove(block);
                         }
+
                         if (sourceBlock != null) {
                             placeBlock(sourceBlock.getLevel(), sourceBlock.getLocation(), entry.getKey().getId());
                             blocksToRemove = Helper.append(blocksToRemove, entry.getKey());
                         } else {
                             Server.getInstance().getLogger().error("Tryed to respawn a Block but found not the source Block!");
                         }
+                    } else {
+                        placeBlock(entry.getKey().getLevel(), entry.getKey().getLocation(), entry.getKey().getId());
+                        blocksToRemove = Helper.append(blocksToRemove, entry.getKey());
                     }
                 }
             }
