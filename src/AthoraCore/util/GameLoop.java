@@ -17,6 +17,7 @@ public class GameLoop implements Runnable {
         MineManager.respawnDestroyedBlocks();
         ForagingManager.respawnDestroyedTrees();
         FarmingManager.respawnDestroyedBlocks();
+        GeneralDestroyableBlocksManager.respawnDestroyedBlocks();
         if (MineSetupManager.mineSetupList.isEmpty() && MineSetupManager.isMineUnderSetup) {
             MineSetupManager.isMineUnderSetup = false;
             MineSetupManager.renderDefaultView(Server.getInstance().getDefaultLevel());

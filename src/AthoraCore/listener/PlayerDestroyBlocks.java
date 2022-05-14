@@ -28,7 +28,7 @@ public class PlayerDestroyBlocks implements Listener {
         boolean isGeneralDestroyableBlock = GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1;
         boolean isFarmingBlock = FarmingManager.fieldsContainsField(event.getBlock().getLevel().getBlock((int) event.getBlock().x, (int) (event.getBlock().y - 1), (int) event.getBlock().z), FarmingManager.getPlant(event.getBlock()));
 
-        if (GeneralDestroyableBlocksManager.setupList.containsKey(player) || GeneralDestroyableBlocksManager.isSetupModeActive && isGeneralDestroyableBlock) {
+        if (GeneralDestroyableBlocksManager.setupList.containsKey(player) || GeneralDestroyableBlocksManager.isSetupModeActive && isGeneralDestroyableBlock || !GeneralDestroyableBlocksManager.isSetupModeActive && GeneralDestroyableBlocksManager.placedBlocks.containsKey(event.getBlock())) {
             if (GeneralDestroyableBlocksManager.isSetupModeActive) {
                 event.setCancelled(true);
                 if (GeneralDestroyableBlocksManager.setupList.containsKey(player)) {
@@ -40,7 +40,11 @@ public class PlayerDestroyBlocks implements Listener {
                     player.sendMessage(Vars.PREFIX + TextFormat.RED + "Der Setup Mode ist momenten für diesen Block aktiviert und kann daher nicht abgebaut werden!");
                 }
             } else {
-                // TODO destroy block
+                if (GeneralDestroyableBlocksManager.placedBlocks.containsKey(event.getBlock()) && GeneralDestroyableBlocksManager.placedBlocks.get(event.getBlock())) {
+                    GeneralDestroyableBlocksManager.destroyBlock(player, event.getBlock());
+                } else {
+                    event.setCancelled(true);
+                }
             }
 
         } else if (isFarmingBlock || !isFarmingBlock && FarmingManager.setupList.containsKey(player) || isFarmingBlock && !FarmingManager.setupList.containsKey(player) && FarmingManager.isFarmUnderSetup) {
@@ -109,9 +113,12 @@ public class PlayerDestroyBlocks implements Listener {
 
     @EventHandler
     public void blockUpdate(BlockUpdateEvent event) {
-        if (GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1) {
+        if (GeneralDestroyableBlocksManager.placedBlocks.containsKey(event.getBlock())) {
             event.setCancelled(true);
         }
+//        if (GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1) {
+//            event.setCancelled(true);
+//        }
     }
 
 }

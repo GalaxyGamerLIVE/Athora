@@ -1,5 +1,6 @@
 package AthoraCore.util.manager;
 
+import AthoraCore.api.AthoraPlayer;
 import AthoraCore.util.Helper;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -9,6 +10,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +34,7 @@ public class GeneralDestroyableBlocksManager {
     public static boolean isSetupModeActive = false;
 
     public static Map<Block, Long> destroyedBlocks = new HashMap<>();
+    public static Map<Block, Boolean> placedBlocks = new HashMap<>();
     public static Map<Player, String> setupList = new HashMap<>();
 
     private static Config config;
@@ -64,6 +67,50 @@ public class GeneralDestroyableBlocksManager {
         config.save();
     }
 
+    public static void respawnDestroyedBlocks() {
+        if (destroyedBlocks.size() > 0) {
+            long currentTime = System.currentTimeMillis();
+            Block[] blocksToRemove = new Block[]{};
+            for (Map.Entry<Block, Long> entry : destroyedBlocks.entrySet()) {
+                int delayForRespawn = config.getInt("settings." + getBlockName(entry.getKey().getId()) + ".spawnInterval");
+                if ((currentTime - entry.getValue()) >= delayForRespawn) {
+                    Vector3 blockLocation = entry.getKey().getLocation();
+                    Block sourceBlock = null;
+                    for (int i = 0; i < blockLocation.y; i++) {
+                        Block block = entry.getKey().getLevel().getBlock((int) blockLocation.x, (int) (blockLocation.y - i), (int) blockLocation.z);
+                        if (getLocationIndexInStorage(block.getLocation()) != -1) {
+                            sourceBlock = block;
+                            break;
+                        }
+                    }
+
+                    if (sourceBlock != null) {
+                        placeBlock(sourceBlock.getLevel(), sourceBlock.getLocation(), entry.getKey().getId());
+                        blocksToRemove = Helper.append(blocksToRemove, entry.getKey());
+                    }else {
+                        Server.getInstance().getLogger().error("Tryed to respawn a Block but found not the source Block!");
+                    }
+                }
+            }
+            for (Block blockToRemove : blocksToRemove) {
+                placedBlocks.replace(blockToRemove, true);
+                destroyedBlocks.remove(blockToRemove);
+            }
+        }
+    }
+
+    public static void destroyBlock(Player player, Block block) {
+        if (!destroyedBlocks.containsKey(block)) {
+            destroyedBlocks.put(block, System.currentTimeMillis());
+            block.getLevel().setBlockDataAt((int) block.x, (int) (block.y + 1), (int) block.z, 0);
+            double ruhmReward = getRuhmPerBlock(block);
+            AthoraPlayer.setRuhm(player, AthoraPlayer.getRuhm(player) + ruhmReward);
+            player.sendActionBar(TextFormat.GOLD + "+ " + ruhmReward + " Ruhm");
+            Helper.playSound("random.orb", player, 0.3f, 0.8f);
+            placedBlocks.replace(block, false);
+        }
+    }
+
     public static void renderSetupView(Level level) {
         for (int destroyableBlock : destroyableBlocks) {
             String blockName = Block.get(destroyableBlock).getPersistenceName();
@@ -80,6 +127,7 @@ public class GeneralDestroyableBlocksManager {
             }
         }
         level.save();
+        placedBlocks.clear();
     }
 
     public static void renderDefaultView(Level level) {
@@ -148,6 +196,8 @@ public class GeneralDestroyableBlocksManager {
                 for (int i = 1; i < randomHeight + 1; i++) {
                     level.setBlockIdAt((int) destination.x, (int) destination.y + i, (int) destination.z, CACTUS_BLOCK);
                     level.setBlockDataAt((int) destination.x, (int) destination.y + i, (int) destination.z, 0);
+                    Vector3 currentLocation = new Vector3(destination.x, destination.y + i, destination.z);
+                    placedBlocks.put(level.getBlock(currentLocation), true);
                 }
                 break;
             case PUMPKIN_BLOCK:
@@ -173,6 +223,8 @@ public class GeneralDestroyableBlocksManager {
                 for (int i = 1; i < randomHeight + 1; i++) {
                     level.setBlockIdAt((int) destination.x, (int) destination.y + i, (int) destination.z, SUGAR_CANE_BLOCK);
                     level.setBlockDataAt((int) destination.x, (int) destination.y + i, (int) destination.z, 0);
+                    Vector3 currentLocation = new Vector3(destination.x, destination.y + i, destination.z);
+                    placedBlocks.put(level.getBlock(currentLocation), true);
                 }
                 break;
             case COCO_BEANS_BLOCK:
@@ -194,6 +246,7 @@ public class GeneralDestroyableBlocksManager {
             default:
                 Server.getInstance().getLogger().error("GeneralDestroyableBlocks tryed to place a block with id: " + targetBlockID + " but the id is not registered!");
         }
+        placedBlocks.put(level.getBlock(destination), true);
     }
 
     public static boolean toggleSetupBlock(Player player, Block block) {
@@ -291,6 +344,13 @@ public class GeneralDestroyableBlocksManager {
             if (blockName.equalsIgnoreCase(name)) return true;
         }
         return false;
+    }
+
+    public static double getRuhmPerBlock(Block block) {
+        if (config.exists("settings." + getBlockName(block.getId()) + ".ruhm")){
+            return config.getDouble("settings." + getBlockName(block.getId()) + ".ruhm");
+        }
+        return 0.0;
     }
 
     public static String getBlockName(int id) {
