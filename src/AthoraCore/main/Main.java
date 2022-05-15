@@ -56,6 +56,7 @@ public class Main extends PluginBase {
         getServer().getCommandMap().register("farmsetup", new FarmSetupCommand(this));
         getServer().getCommandMap().register("generalblockssetup", new GeneralDestroyableBlocksSetupCommand(this));
         getServer().getCommandMap().register("secretsetup", new SecretSetupCommand(this));
+        getServer().getCommandMap().register("secrets", new SecretsCommand(this));
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(this), this);

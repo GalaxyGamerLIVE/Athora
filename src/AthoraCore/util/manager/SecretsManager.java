@@ -53,6 +53,29 @@ public class SecretsManager {
         }
     }
 
+//    public static void getAllSecrets() {
+//        ResultSet resultSet = Database.query("SELECT * FROM athora_secrets");
+//        try {
+//            if (!resultSet.next()) {
+//                Server.getInstance().getLogger().info("Found no Secrets!");
+//            } else {
+//                do {
+//                    Level level = Server.getInstance().getLevelByName(resultSet.getString("world"));
+//                    int x = resultSet.getInt("x");
+//                    int y = resultSet.getInt("y");
+//                    int z = resultSet.getInt("z");
+//                    int ruhmReward = resultSet.getInt("ruhm");
+//                    int coinsReward = resultSet.getInt("coins");
+//                    int[] rewards = new int[]{coinsReward, ruhmReward};
+//                    Block secretBlock = level.getBlock(x, y, z);
+//                    secrets.put(secretBlock, rewards);
+//                } while (resultSet.next());
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public static boolean hasPlayerFoundSecret(Player player, Block secret) {
         int playerId = AthoraPlayer.getPlayerID(player);
         int secretId = getSecretID(secret);
@@ -67,6 +90,20 @@ public class SecretsManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static int getPlayerPositionOnSecret(Player player, Block secret) {
+        int playerId = AthoraPlayer.getPlayerID(player);
+        int secretId = getSecretID(secret);
+        ResultSet resultSet = Database.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
+        try {
+            if (resultSet.next()) {
+                return resultSet.getInt("position");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static void playerFindSecret(Player player, Block secret) {

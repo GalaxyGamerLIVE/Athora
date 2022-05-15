@@ -18,6 +18,7 @@ public class GeneralDestroyableBlocksSetupCommand extends PluginCommand<Main> {
         this.setDescription("Füge neue Farm Blöcke in der Welt hinzu oder entferne sie!");
         this.setPermission("athora.generalblocks.setup.command");
         this.setPermissionMessage(Vars.PREFIX + "Du hast keine Berechtigung diesen Befehl auszuführen!");
+        this.commandParameters.clear();
         this.commandParameters.put("generalBlocks->setup->exit", new CommandParameter[]{
                 CommandParameter.newEnum("SetupExit", new CommandEnum("GeneralDestroyableBlocksManagerBlock", "exit")),
         });
