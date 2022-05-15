@@ -24,8 +24,8 @@ public class ScoreboardManager {
 
             scoreboardDisplay.addLine("    §8§o " + Server.getInstance().getOnlinePlayers().size() + "/" + Server.getInstance().getMaxPlayers() + " " + Server.getInstance().getMotd() + " ", 0);
             scoreboardDisplay.addLine(" §o§7-§gDein Vermögen§7-", 1);
-            scoreboardDisplay.addLine("     §2Geld:§a " + AthoraPlayer.getPurse(player) + "§2$", 2);
-            scoreboardDisplay.addLine("     §6Ruhm: §g" + AthoraPlayer.getRuhm(player), 3);
+            scoreboardDisplay.addLine("     §2Geld:§a " + String.format("%.2f", AthoraPlayer.getPurse(player)) + "§2$", 2);
+            scoreboardDisplay.addLine("     §6Ruhm: §g" + String.format("%.2f", AthoraPlayer.getRuhm(player)), 3);
             scoreboardDisplay.addLine("   §o§7-§gDein Profil§7-", 4);
             scoreboardDisplay.addLine("       §6Level: §g" + AthoraPlayer.getLevel(player), 5);
             scoreboardDisplay.addLine("    §6Spielzeit: §g" + PlaytimeManager.getTotalPlaytimeFormatted(player), 6);

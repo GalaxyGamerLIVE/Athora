@@ -148,10 +148,10 @@ public class AthoraCoreCommand extends PluginCommand<Main> {
             switch (args[0].toLowerCase()) {
                 case "purse":
                     if (args[1].equalsIgnoreCase("get")) {
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.GOLD + AthoraPlayer.getPurse(targetUUID) + "$ " + TextFormat.GREEN + " in der Purse.");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.GOLD + String.format("%.2f", AthoraPlayer.getPurse(targetUUID)) + "$ " + TextFormat.GREEN + " in der Purse.");
                     } else {
                         AthoraPlayer.setPurse(targetUUID, Double.parseDouble(args[3]));
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.GOLD + AthoraPlayer.getPurse(targetUUID) + "$ " + TextFormat.GREEN + " in der Purse.");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.GOLD + String.format("%.2f", AthoraPlayer.getPurse(targetUUID)) + "$ " + TextFormat.GREEN + " in der Purse.");
                     }
                     break;
                 case "level":
@@ -164,18 +164,18 @@ public class AthoraCoreCommand extends PluginCommand<Main> {
                     break;
                 case "ruhm":
                     if (args[1].equalsIgnoreCase("get")) {
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.BLUE + AthoraPlayer.getRuhm(targetUUID) + " Ruhm" + TextFormat.GREEN + ".");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.BLUE + String.format("%.2f", AthoraPlayer.getRuhm(targetUUID)) + " Ruhm" + TextFormat.GREEN + ".");
                     } else {
                         AthoraPlayer.setRuhm(targetUUID, Double.parseDouble(args[3]));
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.BLUE + AthoraPlayer.getRuhm(targetUUID) + " Ruhm" + TextFormat.GREEN + ".");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.BLUE + String.format("%.2f", AthoraPlayer.getRuhm(targetUUID)) + " Ruhm" + TextFormat.GREEN + ".");
                     }
                     break;
                 case "bankmoney":
                     if (args[1].equalsIgnoreCase("get")) {
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.GOLD + AthoraPlayer.getBankMoney(targetUUID) + "$ " + TextFormat.GREEN + " auf der Bank.");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.GOLD + String.format("%.2f", AthoraPlayer.getBankMoney(targetUUID)) + "$ " + TextFormat.GREEN + " auf der Bank.");
                     } else {
                         AthoraPlayer.setBankMoney(targetUUID, Double.parseDouble(args[3]));
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.GOLD + AthoraPlayer.getBankMoney(targetUUID) + "$ " + TextFormat.GREEN + " auf der Bank.");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.GOLD + String.format("%.2f", AthoraPlayer.getBankMoney(targetUUID)) + "$ " + TextFormat.GREEN + " auf der Bank.");
                     }
                     break;
                 case "bankexperience":

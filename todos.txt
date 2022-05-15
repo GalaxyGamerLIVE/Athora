@@ -1,4 +1,8 @@
+Todo:
 - Bank Zinsen (pro Tag 1% Zinsen)
-- Level Up Belohnungen (/key common [player]) bei level 10, 20, 30, 40
 - Secret Plugin
+
+
+Done:
 - /shop command für normale spieler deaktivieren
+- Level Up Belohnungen (/key common [player]) bei level 10, 20, 30, 40
