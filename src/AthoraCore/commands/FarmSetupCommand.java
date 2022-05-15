@@ -17,12 +17,13 @@ public class FarmSetupCommand extends PluginCommand<Main> {
         this.setDescription("Füge neue Felder hinzu oder entferne alte!");
         this.setPermission("athora.farm.setup.command");
         this.setPermissionMessage(Vars.PREFIX + "Du hast keine Berechtigung diesen Befehl auszuführen!");
+        this.commandParameters.clear();
         this.commandParameters.put("farm->setup->exit", new CommandParameter[]{
-                CommandParameter.newEnum("SetupExit", new CommandEnum("FarmingManagerPlant", "exit")),
+                CommandParameter.newEnum("SetupExit", new CommandEnum("FarmingManagerPlant", "exit"))
         });
         for (String plant : FarmingManager.plants) {
             this.commandParameters.put("farm->setup->" + plant, new CommandParameter[]{
-                    CommandParameter.newEnum("FarmingPlant", new CommandEnum("FarmingManagerPlant", plant)),
+                    CommandParameter.newEnum("FarmingPlant", new CommandEnum("FarmingManagerPlant", plant))
             });
         }
     }

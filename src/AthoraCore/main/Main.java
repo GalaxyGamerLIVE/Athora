@@ -55,6 +55,7 @@ public class Main extends PluginBase {
         getServer().getCommandMap().register("minesetup", new MineSetupCommand(this));
         getServer().getCommandMap().register("farmsetup", new FarmSetupCommand(this));
         getServer().getCommandMap().register("generalblockssetup", new GeneralDestroyableBlocksSetupCommand(this));
+        getServer().getCommandMap().register("secretsetup", new SecretSetupCommand(this));
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(this), this);
@@ -67,6 +68,8 @@ public class Main extends PluginBase {
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
 
+        SecretsManager.loadSecrets();
+        getLogger().info("Secrets wurden erfolgreich geladen!");
         GeneralDestroyableBlocksManager.renderDefaultView(getServer().getDefaultLevel());
         getLogger().info("GeneralDestroyableBlocks wurde erfolgreich zurückgesetzt!");
         FarmingManager.resetFarms(getServer().getDefaultLevel());
