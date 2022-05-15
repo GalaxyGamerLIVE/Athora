@@ -2,13 +2,16 @@ package AthoraCore.commands;
 
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
+import AthoraCore.util.GameLoop;
 import AthoraCore.util.manager.MineManager;
 import AthoraCore.util.Vars;
+import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.command.data.CommandEnum;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
+import cn.nukkit.scheduler.TaskHandler;
 import cn.nukkit.utils.TextFormat;
 
 import java.util.Arrays;
@@ -62,6 +65,8 @@ public class MineCommand extends PluginCommand<Main> {
 
         if (AthoraPlayer.getLevel(targetUUID) >= MineManager.getMineRequirements(Integer.parseInt(args[0]))) {
             this.getPlugin().getServer().getPlayer(args[2]).teleport(MineManager.getMineSpawnpoint(Integer.parseInt(args[0]), args[1]));
+            this.getPlugin().getServer().getPlayer(args[2]).setYaw(MineManager.getMineSpawnYaw(Integer.parseInt(args[0]), args[1]));
+            this.getPlugin().getServer().getPlayer(args[2]).setPitch(MineManager.getMineSpawnPitch(Integer.parseInt(args[0]), args[1]));
             this.getPlugin().getServer().getPlayer(args[2]).sendTitle(TextFormat.GREEN + "Mine " + args[0]);
         } else {
             this.getPlugin().getServer().getPlayer(args[2]).sendMessage(Vars.PREFIX + TextFormat.RED + "Du brauchst Level " + TextFormat.BLUE + MineManager.getMineRequirements(Integer.parseInt(args[0])) + TextFormat.RED + " um in die Mine zu kommen!");

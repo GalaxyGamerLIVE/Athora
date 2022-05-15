@@ -33,6 +33,15 @@ public class MineManager {
         return new Vector3(x, y, z);
     }
 
+    public static double getMineSpawnYaw(int mine, String direction) {
+        return mineConfig.getDouble("mine_spawnpoints.mine_" + mine + "." + direction + "Yaw");
+
+    }
+
+    public static double getMineSpawnPitch(int mine, String direction) {
+        return mineConfig.getDouble("mine_spawnpoints.mine_" + mine + "." + direction + "Pitch");
+    }
+
     public static int getMineRequirements(int mine) {
         return mineConfig.getInt("mine_requirements.mine_" + mine);
     }
