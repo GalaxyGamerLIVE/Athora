@@ -5,8 +5,9 @@ Short Description: Core Plugin for the MCPE Server Athora
 
 Todo:
 - ~~Level Belohnung Message Rare Key Chat Farbe zu $b~~
+- Secret Message zusammenfassen
 - Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)
-- Server Transfer Command
+- ~~Server Transfer Command~~
 - Leaderboard System (Playtime, Ruhm, Secrets)
 - Level Belohnungen umschreiben (In der config kann man setzten ab welchen level man welche keys pro aufleveln bekommt)
 - ab Level 15 die futureplots merge permission

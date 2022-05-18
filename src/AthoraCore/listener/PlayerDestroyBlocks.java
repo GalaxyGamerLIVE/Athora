@@ -58,8 +58,9 @@ public class PlayerDestroyBlocks implements Listener {
                 AthoraPlayer.setPurse(player, AthoraPlayer.getPurse(player) + coinsReward);
                 AthoraPlayer.setRuhm(player, AthoraPlayer.getRuhm(player) + ruhmReward);
                 player.getLevel().getServer().broadcastMessage(TextFormat.GREEN + "Der Spieler §l§9" + player.getName() + TextFormat.RESET + TextFormat.GREEN + " hat ein Secret gefunden!");
-                player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast ein neues Secret gefunden und bekommst " + TextFormat.GOLD + coinsReward + "$ " + TextFormat.GREEN + "und " + TextFormat.GOLD + ruhmReward + " Ruhm" + TextFormat.GREEN + "!");
-                player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du bist der " + TextFormat.BLUE + SecretsManager.getSecretDiscovers(event.getBlock()) + TextFormat.GREEN + " der dieses Secret entdeckt hat!");
+                player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du bist der " + TextFormat.BLUE + SecretsManager.getSecretDiscovers(event.getBlock()) + TextFormat.GREEN + " der dieses Secret entdeckt hat! Du bekommst " + TextFormat.GOLD + coinsReward + "$" + TextFormat.GREEN + " und " + TextFormat.GOLD + ruhmReward + TextFormat.GREEN + "Ruhm!");
+//                player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast ein neues Secret gefunden und bekommst " + TextFormat.GOLD + coinsReward + "$ " + TextFormat.GREEN + "und " + TextFormat.GOLD + ruhmReward + " Ruhm" + TextFormat.GREEN + "!");
+//                player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du bist der " + TextFormat.BLUE + SecretsManager.getSecretDiscovers(event.getBlock()) + TextFormat.GREEN + " der dieses Secret entdeckt hat!");
                 Helper.createFireworkParticle(player, DyeColor.CYAN);
             } else {
                 player.sendMessage(Vars.PREFIX + TextFormat.RED + "Du hast das Secret bereits gefunden!");
