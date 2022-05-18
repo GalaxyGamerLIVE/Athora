@@ -1,8 +1,12 @@
 Todo:
-- Bank Zinsen (pro Tag 1% Zinsen)
-- Secret Plugin
-
-
-Done:
-- /shop command für normale spieler deaktivieren
-- Level Up Belohnungen (/key common [player]) bei level 10, 20, 30, 40
+- Level Belohnung Message Rare Key Chat Farbe zu $b
+- Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)
+- Server Transfer Command
+- Leaderboard System (Playtime, Ruhm, Secrets)
+- Level Belohnungen umschreiben:
+    > In der config kann man setzten ab welchen level man welche keys pro aufleveln bekommt
+- ab Level 15 die futureplots merge permission
+- Starter Items (Eisenspitzhacke, Eisenaxt, 32 Brot, 100$)
+- Plot Besitzer im Scoreboard (3:3 Name) ganz unten
+- Ruhm bei Mob killen
+- Hunger System
