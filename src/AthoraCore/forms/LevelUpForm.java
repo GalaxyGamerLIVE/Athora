@@ -55,7 +55,7 @@ public class LevelUpForm {
                             for (int i = 0; i < rareCount; i++) {
                                 Server.getInstance().getCommandMap().dispatch(player, "key rare " + targetPlayer.getName());
                             }
-                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.DARK_BLUE + rareCount + "x Rare Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
+                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.AQUA + rareCount + "x Rare Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
                         }
                         if (epicCount > 0) {
                             for (int i = 0; i < epicCount; i++) {
