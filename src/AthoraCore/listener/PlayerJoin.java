@@ -2,6 +2,7 @@ package AthoraCore.listener;
 
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
+import AthoraCore.util.manager.InterestManager;
 import AthoraCore.util.manager.InventoryManager;
 import AthoraCore.util.manager.PlaytimeManager;
 import AthoraCore.util.manager.ScoreboardManager;
@@ -26,6 +27,8 @@ public class PlayerJoin implements Listener {
         ScoreboardManager.loadScoreboard(event.getPlayer());
 
         InventoryManager.loadPlayerInventory(plugin, event.getPlayer());
+
+        InterestManager.checkInterest(event.getPlayer(), true);
     }
 
 }

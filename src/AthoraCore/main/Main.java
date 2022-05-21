@@ -70,6 +70,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new PlayerDeath(this), this);
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
+        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 3000, true);
 
         SecretsManager.loadSecrets();
         getLogger().info("Secrets wurden erfolgreich geladen!");
