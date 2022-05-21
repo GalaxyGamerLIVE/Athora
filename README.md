@@ -9,7 +9,7 @@ Todo:
 - ~~Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)~~
 - ~~Server Transfer Command~~
 - General Blocks wachsen deaktivieren
-- Ruhm auf 3 Nachkommerstellen erweitern
+- ~~Ruhm auf 3 Nachkommerstellen erweitern~~
 - Leaderboard System (Playtime, Ruhm, Secrets)
 - Level Belohnungen umschreiben (In der config kann man setzten ab welchen level man welche keys pro aufleveln bekommt)
 - ab Level 15 die futureplots merge permission

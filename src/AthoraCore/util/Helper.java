@@ -1,10 +1,12 @@
 package AthoraCore.util;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.item.EntityFirework;
 import cn.nukkit.item.ItemFirework;
+import cn.nukkit.level.Level;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.network.protocol.PlaySoundPacket;
@@ -29,6 +31,14 @@ public class Helper {
         player.dataPacket(playSoundPacket);
     }
 
+    public static boolean levelExists(String name) {
+        Level[] levels = Server.getInstance().getLevels().values().toArray(new Level[0]);
+        for (Level level : levels) {
+            if (level.getName().equalsIgnoreCase(name)) return true;
+        }
+        return false;
+    }
+
     public static boolean stringContainsItemFromList(String inputString, String[] items) {
         return Arrays.stream(items).anyMatch(inputString::contains);
     }
@@ -43,7 +53,7 @@ public class Helper {
             final Field lifetimeField = EntityFirework.class.getDeclaredField("lifetime");
             lifetimeField.setAccessible(true);
             lifetimeField.set(entityFirework, 1);
-        } catch(NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         final ItemFirework itemFirework = new ItemFirework();

@@ -2,6 +2,7 @@ package AthoraCore.util.manager;
 
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.util.Database;
+import AthoraCore.util.Helper;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
@@ -37,15 +38,17 @@ public class SecretsManager {
                 Server.getInstance().getLogger().info("Found no Secrets!");
             } else {
                 do {
-                    Level level = Server.getInstance().getLevelByName(resultSet.getString("world"));
-                    int x = resultSet.getInt("x");
-                    int y = resultSet.getInt("y");
-                    int z = resultSet.getInt("z");
-                    int ruhmReward = resultSet.getInt("ruhm");
-                    int coinsReward = resultSet.getInt("coins");
-                    int[] rewards = new int[]{coinsReward, ruhmReward};
-                    Block secretBlock = level.getBlock(x, y, z);
-                    secrets.put(secretBlock, rewards);
+                    if (Helper.levelExists(resultSet.getString("world"))) {
+                        Level level = Server.getInstance().getLevelByName(resultSet.getString("world"));
+                        int x = resultSet.getInt("x");
+                        int y = resultSet.getInt("y");
+                        int z = resultSet.getInt("z");
+                        int ruhmReward = resultSet.getInt("ruhm");
+                        int coinsReward = resultSet.getInt("coins");
+                        int[] rewards = new int[]{coinsReward, ruhmReward};
+                        Block secretBlock = level.getBlock(x, y, z);
+                        secrets.put(secretBlock, rewards);
+                    }
                 } while (resultSet.next());
             }
         } catch (SQLException e) {
