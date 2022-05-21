@@ -6,7 +6,7 @@ Short Description: Core Plugin for the MCPE Server Athora
 Todo:
 - ~~Level Belohnung Message Rare Key Chat Farbe zu $b~~
 - ~~Secret Message zusammenfassen~~
-- Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)
+- ~~Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)~~
 - ~~Server Transfer Command~~
 - General Blocks wachsen deaktivieren
 - Ruhm auf 3 Nachkommerstellen erweitern
