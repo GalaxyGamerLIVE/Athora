@@ -21,9 +21,9 @@ public class LevelUpForm {
                                 "[Dein Level]\n" +
                                 TextFormat.DARK_GRAY + playerLevel + TextFormat.RESET + " -> " + TextFormat.BLUE + (playerLevel + 1) + "\n\n" + TextFormat.RESET +
                                 "[Benötigter Ruhm]\n" +
-                                TextFormat.BLUE + LevelManager.getRuhmRequirement(playerLevel + 1) + TextFormat.RESET + " (Dein Ruhm: " + TextFormat.RED + String.format("%.2f", AthoraPlayer.getRuhm(player)) + TextFormat.RESET + ")\n\n" +
+                                TextFormat.BLUE + LevelManager.getRuhmRequirement(playerLevel + 1) + TextFormat.RESET + " (Dein Ruhm: " + TextFormat.RED + String.format("%.3f", AthoraPlayer.getRuhm(player)) + TextFormat.RESET + ")\n\n" +
                                 "[Kosten]\n" +
-                                TextFormat.GOLD + LevelManager.getMoneyRequirement(playerLevel + 1) + "$" + TextFormat.RESET + " (Du hast " + TextFormat.GOLD + String.format("%.2f", AthoraPlayer.getPurse(player)) + "$" + TextFormat.RESET + " dabei)"
+                                TextFormat.GOLD + LevelManager.getMoneyRequirement(playerLevel + 1) + "$" + TextFormat.RESET + " (Du hast " + TextFormat.GOLD + String.format("%.3f", AthoraPlayer.getPurse(player)) + "$" + TextFormat.RESET + " dabei)"
                 )
                 .addButton(TextFormat.DARK_GREEN + "Level upgraden\n" + TextFormat.RED + playerLevel + TextFormat.BLACK + " -> " + TextFormat.RED + (playerLevel + 1))
                 .addButton(TextFormat.RED + "Abbrechen");

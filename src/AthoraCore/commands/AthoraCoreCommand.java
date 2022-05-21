@@ -164,10 +164,10 @@ public class AthoraCoreCommand extends PluginCommand<Main> {
                     break;
                 case "ruhm":
                     if (args[1].equalsIgnoreCase("get")) {
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.BLUE + String.format("%.2f", AthoraPlayer.getRuhm(targetUUID)) + " Ruhm" + TextFormat.GREEN + ".");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat " + TextFormat.BLUE + String.format("%.3f", AthoraPlayer.getRuhm(targetUUID)) + " Ruhm" + TextFormat.GREEN + ".");
                     } else {
                         AthoraPlayer.setRuhm(targetUUID, Double.parseDouble(args[3]));
-                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.BLUE + String.format("%.2f", AthoraPlayer.getRuhm(targetUUID)) + " Ruhm" + TextFormat.GREEN + ".");
+                        sender.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.BLUE + args[2] + TextFormat.GREEN + " hat jetzt " + TextFormat.BLUE + String.format("%.3f", AthoraPlayer.getRuhm(targetUUID)) + " Ruhm" + TextFormat.GREEN + ".");
                     }
                     break;
                 case "bankmoney":

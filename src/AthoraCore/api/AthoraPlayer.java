@@ -157,12 +157,12 @@ public class AthoraPlayer {
     }
 
     public static void setRuhm(Player player, double ruhm) {
-        ruhm = Helper.round(ruhm, 2);
+        ruhm = Helper.round(ruhm, 3);
         Database.update("UPDATE athora_players SET ruhm = " + ruhm + " WHERE uuid = '" + player.getUniqueId().toString() + "';");
     }
 
     public static void setRuhm(UUID uuid, double ruhm) {
-        ruhm = Helper.round(ruhm, 2);
+        ruhm = Helper.round(ruhm, 3);
         Database.update("UPDATE athora_players SET ruhm = " + ruhm + " WHERE uuid = '" + uuid.toString() + "';");
     }
 
