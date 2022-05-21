@@ -74,7 +74,7 @@ public class PlayerDestroyBlocks implements Listener {
 
         if (SecretsManager.setupAddList.containsKey(player) || SecretsManager.setupRemoveList.containsKey(player) || SecretsManager.secrets.containsKey(event.getBlock())) {
             event.setCancelled(true);
-        } else {
+        } else if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)){
             boolean isGeneralDestroyableBlock = GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1;
             boolean isFarmingBlock = FarmingManager.fieldsContainsField(event.getBlock().getLevel().getBlock((int) event.getBlock().x, (int) (event.getBlock().y - 1), (int) event.getBlock().z), FarmingManager.getPlant(event.getBlock()));
 
@@ -155,7 +155,7 @@ public class PlayerDestroyBlocks implements Listener {
 
     @EventHandler
     public void blockPlace(BlockPlaceEvent event) {
-        if (!this.plugin.getServer().getMotd().equalsIgnoreCase("dev-server") && !BuildManager.getState(event.getPlayer())) {
+        if (!this.plugin.getServer().getMotd().equalsIgnoreCase("dev-server") && !BuildManager.getState(event.getPlayer()) && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
             event.setCancelled(true);
         }
     }

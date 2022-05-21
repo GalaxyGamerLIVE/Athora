@@ -1,6 +1,7 @@
 package AthoraCore.util.manager;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.network.protocol.TransferPacket;
 
 public class ServerManager {
@@ -13,6 +14,10 @@ public class ServerManager {
         TransferPacket packet = new TransferPacket();
         packet.address = servername;
         player.dataPacket(packet);
+    }
+
+    public static String getCurrentServer() {
+        return Server.getInstance().getMotd().toLowerCase();
     }
 
 

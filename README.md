@@ -8,7 +8,7 @@ Todo:
 - ~~Secret Message zusammenfassen~~
 - ~~Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)~~
 - ~~Server Transfer Command~~
-- Plot Server /build deaktivieren
+- ~~Plot Server /build deaktivieren~~
 - Serverübergreifender chat
 - General Blocks wachsen deaktivieren
 - ~~Ruhm auf 3 Nachkommerstellen erweitern~~
