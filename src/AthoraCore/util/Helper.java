@@ -34,7 +34,7 @@ public class Helper {
     }
 
     public static int getRandomIntBetween(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max);
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
     public static void createFireworkParticle(Player player, DyeColor dyeColor) {
