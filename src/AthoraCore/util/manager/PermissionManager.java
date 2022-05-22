@@ -2,6 +2,9 @@ package AthoraCore.util.manager;
 
 import cn.nukkit.Player;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.node.Node;
+
+import java.util.UUID;
 
 public class PermissionManager {
 
@@ -14,6 +17,12 @@ public class PermissionManager {
             e.printStackTrace();
         }
         return group;
+    }
+
+    public static void addPermission(UUID userUuid, String permission) {
+        LuckPermsProvider.get().getUserManager().modifyUser(userUuid, user -> {
+            user.data().add(Node.builder(permission).build());
+        });
     }
 
     public static String getColorCodeFromGroup(Player player) {

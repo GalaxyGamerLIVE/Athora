@@ -4,10 +4,12 @@ import AthoraCore.api.AthoraPlayer;
 import AthoraCore.util.Helper;
 import AthoraCore.util.manager.LevelManager;
 import AthoraCore.util.Vars;
+import AthoraCore.util.manager.PermissionManager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.DyeColor;
 import cn.nukkit.utils.TextFormat;
+import net.luckperms.api.LuckPermsProvider;
 import ru.nukkitx.forms.elements.SimpleForm;
 
 public class LevelUpForm {
@@ -21,9 +23,9 @@ public class LevelUpForm {
                                 "[Dein Level]\n" +
                                 TextFormat.DARK_GRAY + playerLevel + TextFormat.RESET + " -> " + TextFormat.BLUE + (playerLevel + 1) + "\n\n" + TextFormat.RESET +
                                 "[Benötigter Ruhm]\n" +
-                                TextFormat.BLUE + LevelManager.getRuhmRequirement(playerLevel + 1) + TextFormat.RESET + " (Dein Ruhm: " + TextFormat.RED + String.format("%.3f", AthoraPlayer.getRuhm(player)) + TextFormat.RESET + ")\n\n" +
+                                TextFormat.BLUE + LevelManager.getRuhmRequirement(playerLevel + 1) + TextFormat.RESET + " (Dein Ruhm: " + TextFormat.RED + String.format("%.2f", AthoraPlayer.getRuhm(player)) + TextFormat.RESET + ")\n\n" +
                                 "[Kosten]\n" +
-                                TextFormat.GOLD + LevelManager.getMoneyRequirement(playerLevel + 1) + "$" + TextFormat.RESET + " (Du hast " + TextFormat.GOLD + String.format("%.3f", AthoraPlayer.getPurse(player)) + "$" + TextFormat.RESET + " dabei)"
+                                TextFormat.GOLD + LevelManager.getMoneyRequirement(playerLevel + 1) + "$" + TextFormat.RESET + " (Du hast " + TextFormat.GOLD + String.format("%.2f", AthoraPlayer.getPurse(player)) + "$" + TextFormat.RESET + " dabei)"
                 )
                 .addButton(TextFormat.DARK_GREEN + "Level upgraden\n" + TextFormat.RED + playerLevel + TextFormat.BLACK + " -> " + TextFormat.RED + (playerLevel + 1))
                 .addButton(TextFormat.RED + "Abbrechen");
@@ -70,6 +72,11 @@ public class LevelUpForm {
                             }
                             targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.GOLD + legendaryCount + "x Legendary Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
                         }
+                    }
+
+                    if (newLevel == 15) {
+                        PermissionManager.addPermission(targetPlayer.getUniqueId(), "futureplots.command.merge");
+                        targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du kannst ab jetzt auf dem Plot Server den " + TextFormat.AQUA + "/plot merge " + TextFormat.GREEN + "Befehl benutzen!");
                     }
 
                 } else {
