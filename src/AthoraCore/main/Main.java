@@ -47,6 +47,12 @@ public class Main extends PluginBase {
 //        saveDefaultConfig();
 //        LevelManager.setLevelConfig(getConfig());
 
+        if (getServer().getPluginManager().getPlugin("FuturePlots") != null) {
+            ScoreboardManager.plotsEnabled = true;
+            getLogger().info("Scoreboard Plots Mode aktiviert!");
+        }
+
+
         getServer().getCommandMap().register("athoracore", new AthoraCoreCommand(this));
         getServer().getCommandMap().register("build", new BuildCommand(this));
         getServer().getCommandMap().register("levelup", new LevelUpCommand(this));
