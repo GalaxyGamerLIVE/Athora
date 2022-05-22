@@ -74,6 +74,18 @@ public class Helper {
         return bd.doubleValue();
     }
 
+    public static String[] append(String[] array, String value) {
+        String[] result = Arrays.copyOf(array, array.length + 1);
+        result[result.length - 1] = value;
+        return result;
+    }
+
+    public static Entity[] append(Entity[] array, Entity value) {
+        Entity[] result = Arrays.copyOf(array, array.length + 1);
+        result[result.length - 1] = value;
+        return result;
+    }
+
     public static Block[] append(Block[] array, Block value) {
         Block[] result = Arrays.copyOf(array, array.length + 1);
         result[result.length - 1] = value;

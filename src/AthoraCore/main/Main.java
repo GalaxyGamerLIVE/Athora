@@ -82,6 +82,8 @@ public class Main extends PluginBase {
         getLogger().info("Mine wurde erfolgreich zurückgesetzt!");
         MineManager.generateOres(getServer().getDefaultLevel());
         getLogger().info("Mine wurde erfolgreich erstellt!");
+
+        LeaderboardManager.loadLeaderboards(getServer().getDefaultLevel());
     }
 
     @Override

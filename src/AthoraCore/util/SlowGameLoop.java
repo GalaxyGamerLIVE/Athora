@@ -1,6 +1,7 @@
 package AthoraCore.util;
 
 import AthoraCore.util.manager.InterestManager;
+import AthoraCore.util.manager.LeaderboardManager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
@@ -21,6 +22,6 @@ public class SlowGameLoop implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        LeaderboardManager.loadLeaderboards(Server.getInstance().getDefaultLevel());
     }
 }

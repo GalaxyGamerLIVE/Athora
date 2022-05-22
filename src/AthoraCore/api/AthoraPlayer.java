@@ -75,6 +75,19 @@ public class AthoraPlayer {
         return 0;
     }
 
+    public static String getPlayerName(UUID uuid) {
+        ResultSet resultSet = Database.query("SELECT playername FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        try {
+            if (resultSet.next()) {
+                return resultSet.getString("playername");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
     public static void setInventory(Player player, String inventory) {
         if (inventory.equalsIgnoreCase("")) {
             Database.update("UPDATE athora_players SET inventory = NULL WHERE uuid = '" + player.getUniqueId().toString() + "';");
