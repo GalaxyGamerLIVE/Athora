@@ -9,7 +9,7 @@ Todo:
 - ~~Bank Zinsen (pro Tag 1% Zinsen) inkl. Bank Hilfe Menü anpassen (7 tage -> 1 tag)~~
 - ~~Server Transfer Command~~
 - ~~Plot Server /build deaktivieren~~
-- Serverübergreifender chat (mit !)
+- ~~Serverübergreifender chat (mit !)~~
 - General Blocks wachsen deaktivieren
 - ~~Ruhm auf 3 Nachkommerstellen erweitern~~
 - ~~Leaderboard System (Playtime, Ruhm, Secrets, Geld)~~
