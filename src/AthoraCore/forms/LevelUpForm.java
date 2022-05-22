@@ -40,11 +40,12 @@ public class LevelUpForm {
                     targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du bist jetzt Level " + TextFormat.BLUE + AthoraPlayer.getLevel(targetPlayer) + TextFormat.GREEN + ".");
                     Helper.createFireworkParticle(targetPlayer, DyeColor.CYAN);
 
-                    if (LevelManager.levelConfig.exists("level_rewards.level_" + newLevel)) {
-                        int commonCount = LevelManager.levelConfig.getInt("level_rewards.level_" + newLevel + ".common");
-                        int rareCount = LevelManager.levelConfig.getInt("level_rewards.level_" + newLevel + ".rare");
-                        int epicCount = LevelManager.levelConfig.getInt("level_rewards.level_" + newLevel + ".epic");
-                        int legendaryCount = LevelManager.levelConfig.getInt("level_rewards.level_" + newLevel + ".legendary");
+                    int levelRewardLevel = LevelManager.getLevelRewardLevel(newLevel);
+                    if (LevelManager.levelConfig.exists("level_rewards.level_" + levelRewardLevel)) {
+                        int commonCount = LevelManager.levelConfig.getInt("level_rewards.level_" + levelRewardLevel + ".common");
+                        int rareCount = LevelManager.levelConfig.getInt("level_rewards.level_" + levelRewardLevel + ".rare");
+                        int epicCount = LevelManager.levelConfig.getInt("level_rewards.level_" + levelRewardLevel + ".epic");
+                        int legendaryCount = LevelManager.levelConfig.getInt("level_rewards.level_" + levelRewardLevel + ".legendary");
                         if (commonCount > 0) {
                             for (int i = 0; i < commonCount; i++) {
                                 Server.getInstance().getCommandMap().dispatch(player, "key common " + targetPlayer.getName());

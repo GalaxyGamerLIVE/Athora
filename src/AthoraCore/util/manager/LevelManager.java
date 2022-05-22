@@ -10,6 +10,19 @@ public class LevelManager {
         LevelManager.levelConfig = levelConfig;
     }
 
+    public static int getLevelRewardLevel(int level) {
+        boolean searching = true;
+        do {
+            if (levelConfig.exists("level_rewards.level_" + level)) {
+                searching = false;
+            } else {
+                if (level == 0) return 0;
+                level--;
+            }
+        } while (searching);
+        return level;
+    }
+
     public static int getRuhmRequirement(int level) {
         if (levelConfig.exists("level_upgrades.level_" + level)) {
             return levelConfig.getInt("level_upgrades.level_" + level + ".ruhm");
