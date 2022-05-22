@@ -41,7 +41,7 @@ public class AthoraPlayer {
 
     public static void createNewPlayer(Player player) {
         Database.update("INSERT INTO athora_bank (money, storage_level, salary_level, salary_time, experience) VALUES(0, 1, 1, 0, 0);");
-        Database.update("INSERT INTO athora_players (bank_id, uuid, playername, ruhm, level, purse, playtime) VALUES(LAST_INSERT_ID(), '" + player.getUniqueId().toString() + "', '" + player.getName() + "', 0, 1, 0, 0);");
+        Database.update("INSERT INTO athora_players (bank_id, uuid, playername, ruhm, level, purse, playtime) VALUES(LAST_INSERT_ID(), '" + player.getUniqueId().toString() + "', '" + player.getName() + "', 0, 1, 100, 0);");
     }
 
     public static void createNewPlayer(UUID uuid, String playername) {
