@@ -10,12 +10,12 @@ Todo:
 - ~~Server Transfer Command~~
 - ~~Plot Server /build deaktivieren~~
 - ~~Serverübergreifender chat (mit !)~~
-- General Blocks wachsen deaktivieren
 - ~~Ruhm auf 3 Nachkommerstellen erweitern~~
 - ~~Leaderboard System (Playtime, Ruhm, Secrets, Geld)~~
 - ~~Level Belohnungen umschreiben (In der config kann man setzten ab welchen level man welche keys pro aufleveln bekommt)~~
 - ~~ab Level 15 die futureplots merge permission~~
 - ~~Starter Items (Eisenspitzhacke, Eisenaxt, 32 Brot, 100$)~~
 - ~~Plot Besitzer im Scoreboard (3:3 Name) ganz unten~~
-- Ruhm bei Mob killen
+- ~~Ruhm bei Mob killen~~
 - Hunger System
+- (General Blocks wachsen deaktivieren)
