@@ -36,15 +36,19 @@ public class GameLoop implements Runnable {
                 for (Player player : players.values()) {
                     ScoreboardManager.loadScoreboard(player);
                     NameTagManager.updateNameTag(player);
-                    if (AreaProtection.getInstance().getAreaByPos(player.getPosition()) == null) {
-                        player.sendActionBar(TextFormat.GREEN + "Area: " + TextFormat.RED + "/");
-                    } else {
-                        player.sendActionBar(TextFormat.GREEN + "Area: " + TextFormat.RED + AreaProtection.getInstance().getAreaByPos(player.getPosition()).getName());
-                    }
-                    Block blockLookingAt = player.getTargetBlock(50);
-                    if (blockLookingAt != null) {
+
+                    boolean debug = false;
+                    if (debug) {
+                        if (AreaProtection.getInstance().getAreaByPos(player.getPosition()) == null) {
+                            player.sendActionBar(TextFormat.GREEN + "Area: " + TextFormat.RED + "/");
+                        } else {
+                            player.sendActionBar(TextFormat.GREEN + "Area: " + TextFormat.RED + AreaProtection.getInstance().getAreaByPos(player.getPosition()).getName());
+                        }
+                        Block blockLookingAt = player.getTargetBlock(50);
+                        if (blockLookingAt != null) {
 //                        player.sendPopup(TextFormat.GREEN + "Block: " + TextFormat.BLUE + blockLookingAt.x + " " + blockLookingAt.y + " " + blockLookingAt.z);
-                        player.sendPopup(TextFormat.GREEN + "Block: " + blockLookingAt.getId() + " " + blockLookingAt.getDamage());
+                            player.sendPopup(TextFormat.GREEN + "Block: " + blockLookingAt.getId() + " " + blockLookingAt.getDamage());
+                        }
                     }
                 }
             }
