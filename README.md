@@ -17,5 +17,5 @@ Todo:
 - ~~Starter Items (Eisenspitzhacke, Eisenaxt, 32 Brot, 100$)~~
 - ~~Plot Besitzer im Scoreboard (3:3 Name) ganz unten~~
 - ~~Ruhm bei Mob killen~~
-- Hunger System
+- ~~Hunger System~~
 - (General Blocks wachsen deaktivieren)
