@@ -35,7 +35,7 @@ public class PlayerDeath implements Listener {
             Entity entity = event.getEntity();
             if (entity.getHealth() - event.getDamage() <= 0) {
                 Player attacker = (Player) event.getDamager();
-                double ruhmReward = 0.085;
+                double ruhmReward = 0.25;
                 AthoraPlayer.setRuhm(attacker, AthoraPlayer.getRuhm(attacker) + ruhmReward);
                 attacker.sendActionBar(TextFormat.GOLD + "+ " + ruhmReward + " Ruhm");
                 Helper.playSound("random.orb", attacker, 0.3f, 0.8f);

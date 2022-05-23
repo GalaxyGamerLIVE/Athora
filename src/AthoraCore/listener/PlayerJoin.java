@@ -39,7 +39,9 @@ public class PlayerJoin implements Listener {
 
         InventoryManager.loadPlayerInventory(plugin, event.getPlayer());
 
-        InterestManager.checkInterest(event.getPlayer(), true);
+        plugin.getServer().getScheduler().scheduleDelayedTask(() -> {
+            InterestManager.checkInterest(event.getPlayer(), true);
+        }, 150);
     }
 
 }
