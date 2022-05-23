@@ -74,6 +74,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new PlayerChat(this), this);
         pluginManager.registerEvents(new SeedsGrow(this), this);
         pluginManager.registerEvents(new PlayerDeath(this), this);
+        pluginManager.registerEvents(new PlayerFood(this), this);
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 3000, true);
