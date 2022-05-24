@@ -17,5 +17,8 @@ Todo:
 - ~~Starter Items (Eisenspitzhacke, Eisenaxt, 32 Brot, 100$)~~
 - ~~Plot Besitzer im Scoreboard (3:3 Name) ganz unten~~
 - ~~Ruhm bei Mob killen~~
-- ~~Hunger System~~
+- ~~Hunger System dealtivieren~~
+- eigenes Hunger System entwickeln
+- Configs in Datenbank auslagern für eine zentrale Speicherung
+- Bank Zinsen nur so lange wie auch platz auf dem Konto ist
 - (General Blocks wachsen deaktivieren)
