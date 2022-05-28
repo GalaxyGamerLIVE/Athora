@@ -39,6 +39,10 @@ public class Helper {
         return false;
     }
 
+    public static boolean isNumeric(String string) {
+        return string.chars().allMatch(Character::isDigit);
+    }
+
     public static boolean stringContainsItemFromList(String inputString, String[] items) {
         return Arrays.stream(items).anyMatch(inputString::contains);
     }

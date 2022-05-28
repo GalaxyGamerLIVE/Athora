@@ -65,6 +65,7 @@ public class Main extends PluginBase {
         getServer().getCommandMap().register("secrets", new SecretsCommand(this));
         getServer().getCommandMap().register("lobby", new LobbyCommand(this));
         getServer().getCommandMap().register("plots", new PlotsCommand(this));
+        getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(this), this);
