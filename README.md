@@ -18,6 +18,7 @@ Todo:
 - ~~Plot Besitzer im Scoreboard (3:3 Name) ganz unten~~
 - ~~Ruhm bei Mob killen~~
 - ~~Hunger System dealtivieren~~
+- Command zum Geld geben hinzufügen
 - eigenes Hunger System entwickeln
 - Configs in Datenbank auslagern für eine zentrale Speicherung
 - Bank Zinsen nur so lange wie auch platz auf dem Konto ist
