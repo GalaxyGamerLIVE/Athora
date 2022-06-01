@@ -18,6 +18,8 @@ public class GiveMoneyCommand extends PluginCommand<Main> {
     public GiveMoneyCommand(Main owner) {
         super("givemoney", owner);
         this.setDescription("Mit den Befehl kanns du anderen Spielern dein Geld geben!");
+        String[] aliases = new String[]{"pay"};
+        this.setAliases(aliases);
         this.commandParameters.clear();
         this.commandParameters.put("money->give", new CommandParameter[]{
                 CommandParameter.newType("player", CommandParamType.TARGET),
@@ -57,10 +59,15 @@ public class GiveMoneyCommand extends PluginCommand<Main> {
             return false;
         }
 
-        AthoraPlayer.setPurse(player, AthoraPlayer.getPurse(player) - money);
-        AthoraPlayer.setPurse(targetPlayer, AthoraPlayer.getPurse(targetPlayer) + money);
-        player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast erfolgreich den Spieler " + TextFormat.AQUA + targetPlayer.getName() + " " + TextFormat.GOLD + money + "$ " + TextFormat.GREEN + " gegeben!");
-        targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.AQUA + player.getName() + TextFormat.GREEN + " hat dir " + TextFormat.GOLD + money + "$ " + TextFormat.GREEN + " gegeben!");
+        if (money >= 1) {
+            AthoraPlayer.setPurse(player, AthoraPlayer.getPurse(player) - money);
+            AthoraPlayer.setPurse(targetPlayer, AthoraPlayer.getPurse(targetPlayer) + money);
+            player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast erfolgreich den Spieler " + TextFormat.AQUA + targetPlayer.getName() + " " + TextFormat.GOLD + money + "$ " + TextFormat.GREEN + "gegeben!");
+            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Der Spieler " + TextFormat.AQUA + player.getName() + TextFormat.GREEN + " hat dir " + TextFormat.GOLD + money + "$ " + TextFormat.GREEN + "gegeben!");
+        } else {
+            player.sendMessage(Vars.PREFIX + TextFormat.RED + "Du musst eine Zahl eingeben die höher als 0 ist!");
+            return false;
+        }
 
         return true;
     }
