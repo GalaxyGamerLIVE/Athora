@@ -14,6 +14,7 @@ import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.block.BlockUpdateEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemID;
 import cn.nukkit.utils.DyeColor;
 import cn.nukkit.utils.TextFormat;
 
@@ -28,6 +29,12 @@ public class PlayerDestroyBlocks implements Listener {
     @EventHandler
     public void interact(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER) || !BuildManager.getState(player)) {
+            if (player.getInventory().getItemInHand().getId() == ItemID.BUCKET || player.getInventory().getItemInHand().getId() == ItemID.FLINT_AND_STEEL) {
+                event.setCancelled(true);
+                player.sendMessage(Vars.PREFIX + TextFormat.RED + "Du kannst dieses Item nur auf dem Plot Server benutzten!");
+            }
+        }
         if (SecretsManager.setupAddList.containsKey(player)) {
             event.setCancelled(true);
             if (event.getBlock().getId() == BlockID.SIGN_POST || event.getBlock().getId() == BlockID.WALL_SIGN) {
