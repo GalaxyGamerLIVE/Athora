@@ -1,7 +1,7 @@
 package AthoraCore.util.manager;
 
 import AthoraCore.api.AthoraPlayer;
-import AthoraCore.util.Database;
+import AthoraCore.database.DefaultDatabase;
 import AthoraCore.util.Helper;
 import cn.nukkit.Server;
 import cn.nukkit.entity.Entity;
@@ -78,7 +78,7 @@ public class LeaderboardManager {
         int index = 1;
         StringBuilder nameTag = new StringBuilder();
         nameTag.append("§l§6>> §gBestenliste §7-§r §3Level §l§6<<\n");
-        ResultSet resultSet = Database.query("SELECT athora_players.playername, athora_players.`level` FROM athora_players ORDER BY athora_players.`level` DESC LIMIT " + LEADERBOARD_ROWS_LEVEL + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT athora_players.playername, athora_players.`level` FROM athora_players ORDER BY athora_players.`level` DESC LIMIT " + LEADERBOARD_ROWS_LEVEL + ";");
         try {
             while (resultSet.next()) {
                 String playername = resultSet.getString("playername");
@@ -96,7 +96,7 @@ public class LeaderboardManager {
         int index = 1;
         StringBuilder nameTag = new StringBuilder();
         nameTag.append("§l§6>> §gBestenliste §7-§r §2$ §aGeld §2$ §l§6<<\n");
-        ResultSet resultSet = Database.query("SELECT athora_players.playername, (athora_players.purse + athora_bank.money) AS total_money " +
+        ResultSet resultSet = DefaultDatabase.query("SELECT athora_players.playername, (athora_players.purse + athora_bank.money) AS total_money " +
                 "FROM athora_players, athora_bank " +
                 "WHERE athora_players.bank_id = athora_bank.id " +
                 "ORDER BY (athora_players.purse + athora_bank.money) DESC LIMIT " + LEADERBOARD_ROWS_MONEY + ";");
@@ -117,7 +117,7 @@ public class LeaderboardManager {
         int index = 1;
         StringBuilder nameTag = new StringBuilder();
         nameTag.append("§l§6>> §gBestenliste §7-§r §cRuhm §l§6<<\n");
-        ResultSet resultSet = Database.query("SELECT playername, ruhm FROM athora_players ORDER BY ruhm DESC LIMIT " + LEADERBOARD_ROWS_RUHM + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT playername, ruhm FROM athora_players ORDER BY ruhm DESC LIMIT " + LEADERBOARD_ROWS_RUHM + ";");
         try {
             while (resultSet.next()) {
                 String playername = resultSet.getString("playername");
@@ -135,7 +135,7 @@ public class LeaderboardManager {
         int index = 1;
         StringBuilder nameTag = new StringBuilder();
         nameTag.append("§l§6>> §gBestenliste §7-§r §9Secrets §l§6<<\n");
-        ResultSet resultSet = Database.query("SELECT DISTINCT athora_players.`uuid`, COUNT(athora_player_secrets.player_id) AS secrets" +
+        ResultSet resultSet = DefaultDatabase.query("SELECT DISTINCT athora_players.`uuid`, COUNT(athora_player_secrets.player_id) AS secrets" +
                 " FROM athora_players, athora_player_secrets" +
                 " WHERE athora_players.id = athora_player_secrets.player_id" +
                 " GROUP BY player_id ORDER BY COUNT(athora_player_secrets.player_id) DESC LIMIT " + LEADERBOARD_ROWS_SECRETS + ";");
@@ -154,7 +154,7 @@ public class LeaderboardManager {
 
     public static String getTopPlaytimeNameTag() {
         String[] leaderboardData = new String[]{};
-        ResultSet resultSet = Database.query("SELECT uuid FROM athora_players ORDER BY playtime DESC LIMIT " + LEADERBOARD_ROWS_PLAYTIME + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT uuid FROM athora_players ORDER BY playtime DESC LIMIT " + LEADERBOARD_ROWS_PLAYTIME + ";");
         try {
             while (resultSet.next()) {
                 leaderboardData = Helper.append(leaderboardData, resultSet.getString("uuid"));

@@ -36,7 +36,7 @@ public class GameLoop implements Runnable {
                 for (Player player : players.values()) {
                     ScoreboardManager.loadScoreboard(player);
                     NameTagManager.updateNameTag(player);
-
+                    DailyQuestManager.loadBossBar(player);
                     boolean debug = false;
                     if (debug) {
                         if (AreaProtection.getInstance().getAreaByPos(player.getPosition()) == null) {

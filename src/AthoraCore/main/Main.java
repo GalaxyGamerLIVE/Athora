@@ -1,10 +1,44 @@
 package AthoraCore.main;
 
-import AthoraCore.commands.*;
-import AthoraCore.listener.*;
-import AthoraCore.util.*;
+import AthoraCore.commands.AthoraCoreCommand;
+import AthoraCore.commands.BuildCommand;
+import AthoraCore.commands.DailyCommand;
+import AthoraCore.commands.FarmSetupCommand;
+import AthoraCore.commands.GeneralDestroyableBlocksSetupCommand;
+import AthoraCore.commands.GiveMoneyCommand;
+import AthoraCore.commands.LevelUpCommand;
+import AthoraCore.commands.LobbyCommand;
+import AthoraCore.commands.MineCommand;
+import AthoraCore.commands.MineFastTravelCommand;
+import AthoraCore.commands.MineSetupCommand;
+import AthoraCore.commands.PlotsCommand;
+import AthoraCore.commands.SecretSetupCommand;
+import AthoraCore.commands.SecretsCommand;
+import AthoraCore.database.DefaultDatabase;
+import AthoraCore.database.DevDatabase;
+import AthoraCore.database.GlobalDatabase;
+import AthoraCore.database.ProductionDatabase;
+import AthoraCore.listener.PlayerChat;
+import AthoraCore.listener.PlayerDeath;
+import AthoraCore.listener.PlayerDestroyBlocks;
+import AthoraCore.listener.PlayerFood;
+import AthoraCore.listener.PlayerJoin;
+import AthoraCore.listener.PlayerQuit;
+import AthoraCore.listener.SeedsGrow;
+import AthoraCore.util.manager.BossBarManager;
+import AthoraCore.util.GameLoop;
+import AthoraCore.util.ItemAPI;
+import AthoraCore.util.SlowGameLoop;
 import AthoraCore.util.configs.GeneralConfig;
-import AthoraCore.util.manager.*;
+import AthoraCore.util.manager.FarmingManager;
+import AthoraCore.util.manager.ForagingManager;
+import AthoraCore.util.manager.GeneralDestroyableBlocksManager;
+import AthoraCore.util.manager.LeaderboardManager;
+import AthoraCore.util.manager.LevelManager;
+import AthoraCore.util.manager.MineManager;
+import AthoraCore.util.manager.PlaytimeManager;
+import AthoraCore.util.manager.ScoreboardManager;
+import AthoraCore.util.manager.SecretsManager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
@@ -29,10 +63,7 @@ public class Main extends PluginBase {
     public void onEnable() {
         Config generalConfig = new Config(new File(this.getDataFolder(), "generalConfig.yml"), Config.YAML);
         GeneralConfig.setGeneralConfig(generalConfig);
-
-        Database.connect();
-        getLogger().info("Datenbank Verbindung aufgebaut!");
-
+        initDatabases();
         Config levelConfig = new Config(new File(this.getDataFolder(), "levelConfig.yml"), Config.YAML);
         Config mineConfig = new Config(new File(this.getDataFolder(), "mineConfig.yml"), Config.YAML);
         Config foragingConfig = new Config(new File(this.getDataFolder(), "foragingConfig.yml"), Config.YAML);
@@ -66,6 +97,7 @@ public class Main extends PluginBase {
         getServer().getCommandMap().register("lobby", new LobbyCommand(this));
         getServer().getCommandMap().register("plots", new PlotsCommand(this));
         getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
+        getServer().getCommandMap().register("daily", new DailyCommand(this));
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(this), this);
@@ -101,16 +133,15 @@ public class Main extends PluginBase {
             if (!players.isEmpty()) {
                 for (Player player : players.values()) {
                     PlaytimeManager.untrackPlayer(player);
-//                    InventoryManager.savePlayerInventory(player, this);
+                    if (BossBarManager.playerHasBossBar(player))
+                        BossBarManager.removeBossBar(player);
+                    //                    InventoryManager.savePlayerInventory(player, this);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Database.disconnect();
-        getLogger().info("Datenbank Verbindung geschlossen!");
-
+        disconnectDatabases();
         GeneralDestroyableBlocksManager.renderDefaultView(getServer().getDefaultLevel());
         getLogger().info("GeneralDestroyableBlocks wurde erfolgreich zurückgesetzt!");
         FarmingManager.resetFarms(getServer().getDefaultLevel());
@@ -129,6 +160,25 @@ public class Main extends PluginBase {
         return itemAPI;
     }
 
+    private void disconnectDatabases() {
+        DefaultDatabase.disconnect();
+        GlobalDatabase.disconnect();
+        DevDatabase.disconnect();
+        ProductionDatabase.disconnect();
+    }
+
+    private void initDatabases() {
+        DefaultDatabase.connect();
+        if (!DefaultDatabase.isConnected())
+            getLogger().error("Failed to connect to Default Database!");
+        GlobalDatabase.connect();
+        if (!GlobalDatabase.isConnected())
+            getLogger().error("Failed to connect to Global Database!");
+        DevDatabase.connect();
+        if (!DevDatabase.isConnected())
+            getLogger().error("Failed to connect to Dev Database!");
+        ProductionDatabase.connect();
+        if (!ProductionDatabase.isConnected())
+            getLogger().error("Failed to connect to Production Database!");
+    }
 }
-
-

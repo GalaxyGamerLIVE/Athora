@@ -1,7 +1,7 @@
 package AthoraCore.util.manager;
 
 import AthoraCore.api.AthoraPlayer;
-import AthoraCore.util.Database;
+import AthoraCore.database.DefaultDatabase;
 import AthoraCore.util.Helper;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -20,19 +20,19 @@ public class SecretsManager {
     public static Map<Block, int[]> secrets = new HashMap<>();
 
     public static void addSecret(String world, int x, int y, int z, int coins, int ruhm) {
-        Database.update("INSERT INTO athora_secrets (world, x, y, z, ruhm, coins, discovers) VALUES('" + world + "', " + x + ", " + y + ", " + z + ", " + ruhm + ", " + coins + ", 0);");
+        DefaultDatabase.update("INSERT INTO athora_secrets (world, x, y, z, ruhm, coins, discovers) VALUES('" + world + "', " + x + ", " + y + ", " + z + ", " + ruhm + ", " + coins + ", 0);");
         loadSecrets();
     }
 
     public static void removeSecret(String world, int x, int y, int z) {
-        Database.update("DELETE FROM athora_player_secrets WHERE secret_id = " + getSecretID(Server.getInstance().getLevelByName(world).getBlock(x, y, z)) + ";");
-        Database.update("DELETE FROM athora_secrets WHERE world = '" + world + "' AND x = " + x + " AND y = " + y + " AND z = " + z + ";");
+        DefaultDatabase.update("DELETE FROM athora_player_secrets WHERE secret_id = " + getSecretID(Server.getInstance().getLevelByName(world).getBlock(x, y, z)) + ";");
+        DefaultDatabase.update("DELETE FROM athora_secrets WHERE world = '" + world + "' AND x = " + x + " AND y = " + y + " AND z = " + z + ";");
         loadSecrets();
     }
 
     public static void loadSecrets() {
         secrets.clear();
-        ResultSet resultSet = Database.query("SELECT * FROM athora_secrets");
+        ResultSet resultSet = DefaultDatabase.query("SELECT * FROM athora_secrets");
         try {
             if (!resultSet.next()) {
                 Server.getInstance().getLogger().info("Found no Secrets!");
@@ -82,7 +82,7 @@ public class SecretsManager {
     public static boolean hasPlayerFoundSecret(Player player, Block secret) {
         int playerId = AthoraPlayer.getPlayerID(player);
         int secretId = getSecretID(secret);
-        ResultSet resultSet = Database.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
         try {
             if (!resultSet.next()) {
                 return false;
@@ -98,7 +98,7 @@ public class SecretsManager {
     public static int getPlayerPositionOnSecret(Player player, Block secret) {
         int playerId = AthoraPlayer.getPlayerID(player);
         int secretId = getSecretID(secret);
-        ResultSet resultSet = Database.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
         try {
             if (resultSet.next()) {
                 return resultSet.getInt("position");
@@ -114,12 +114,12 @@ public class SecretsManager {
         int secretId = getSecretID(secret);
         int currentSecretDiscovers = getSecretDiscovers(secret);
         int playerDiscoverPosition = currentSecretDiscovers + 1;
-        Database.update("INSERT INTO athora_player_secrets (player_id, secret_id, position) VALUES(" + playerId + ", " + secretId + ", " + playerDiscoverPosition + ");");
-        Database.update("UPDATE athora_secrets SET discovers = " + playerDiscoverPosition + " WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
+        DefaultDatabase.update("INSERT INTO athora_player_secrets (player_id, secret_id, position) VALUES(" + playerId + ", " + secretId + ", " + playerDiscoverPosition + ");");
+        DefaultDatabase.update("UPDATE athora_secrets SET discovers = " + playerDiscoverPosition + " WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
     }
 
     public static int getSecretDiscovers(Block secret) {
-        ResultSet resultSet = Database.query("SELECT discovers FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT discovers FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
         try {
             if (resultSet.next()) {
                 return resultSet.getInt("discovers");
@@ -131,7 +131,7 @@ public class SecretsManager {
     }
 
     public static int getSecretID(Block secret) {
-        ResultSet resultSet = Database.query("SELECT id FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
+        ResultSet resultSet = DefaultDatabase.query("SELECT id FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
         try {
             if (resultSet.next()) {
                 return resultSet.getInt("id");
