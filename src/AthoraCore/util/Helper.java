@@ -1,14 +1,18 @@
 package AthoraCore.util;
 
+import AthoraCore.components.Quest;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.item.EntityFirework;
+import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemFirework;
 import cn.nukkit.level.Level;
+import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
+import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.network.protocol.PlaySoundPacket;
 import cn.nukkit.utils.DyeColor;
 
@@ -86,6 +90,12 @@ public class Helper {
 
     public static Entity[] append(Entity[] array, Entity value) {
         Entity[] result = Arrays.copyOf(array, array.length + 1);
+        result[result.length - 1] = value;
+        return result;
+    }
+
+    public static Quest[] append(Quest[] array, Quest value) {
+        Quest[] result = Arrays.copyOf(array, array.length + 1);
         result[result.length - 1] = value;
         return result;
     }

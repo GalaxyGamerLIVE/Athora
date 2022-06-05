@@ -1,6 +1,6 @@
 package AthoraCore.util.manager;
 
-import AthoraCore.util.Database;
+import AthoraCore.database.DefaultDatabase;
 import AthoraCore.util.Helper;
 import AthoraCore.util.Vars;
 import cn.nukkit.Player;
@@ -23,7 +23,7 @@ public class InterestManager {
     }
 
     public static int getLastInterestAmount(Player player) {
-        ResultSet resultSet = Database.query("SELECT last_interest_amount FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        ResultSet resultSet = DefaultDatabase.query("SELECT last_interest_amount FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
             if (resultSet.next()) {
                 return resultSet.getInt("last_interest_amount");
@@ -36,7 +36,7 @@ public class InterestManager {
     }
 
     public static void resetLastInterestAmount(Player player) {
-        Database.update("UPDATE athora_bank, athora_players SET last_interest_amount = 0 WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        DefaultDatabase.update("UPDATE athora_bank, athora_players SET last_interest_amount = 0 WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
     }
 
 }
