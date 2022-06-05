@@ -15,6 +15,8 @@ public class PlayerFood implements Listener {
 
     @EventHandler
     public void onFoodLevelChange(PlayerFoodLevelChangeEvent event) {
+        event.setFoodLevel(20);
+        event.setFoodSaturationLevel(100);
         event.setCancelled(true);
     }
 
