@@ -31,6 +31,7 @@ import AthoraCore.util.GameLoop;
 import AthoraCore.util.ItemAPI;
 import AthoraCore.util.SlowGameLoop;
 import AthoraCore.util.configs.GeneralConfig;
+import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.FarmingManager;
 import AthoraCore.util.manager.ForagingManager;
 import AthoraCore.util.manager.GeneralDestroyableBlocksManager;
@@ -38,8 +39,10 @@ import AthoraCore.util.manager.LeaderboardManager;
 import AthoraCore.util.manager.LevelManager;
 import AthoraCore.util.manager.MineManager;
 import AthoraCore.util.manager.PlaytimeManager;
+import AthoraCore.util.manager.ReloadLoop;
 import AthoraCore.util.manager.ScoreboardManager;
 import AthoraCore.util.manager.SecretsManager;
+import AthoraCore.util.manager.ServerManager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
@@ -114,6 +117,17 @@ public class Main extends PluginBase {
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 3000, true);
 
+        if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.LOBBY_SERVER)) {
+            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 36000);
+        } else if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 54000);
+        } else if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.DEV_SERVER)) {
+            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 96000);
+        } else {
+            getLogger().error("Cannot find Reload Time for active Server!");
+        }
+
+
         SecretsManager.loadSecrets();
         getLogger().info("Secrets wurden erfolgreich geladen!");
         GeneralDestroyableBlocksManager.renderDefaultView(getServer().getDefaultLevel());
@@ -126,6 +140,16 @@ public class Main extends PluginBase {
         getLogger().info("Mine wurde erfolgreich erstellt!");
 
         LeaderboardManager.loadLeaderboards(getServer().getDefaultLevel());
+        try {
+            Map<UUID, Player> players = Server.getInstance().getOnlinePlayers();
+            if (!players.isEmpty()) {
+                for (Player player : players.values()) {
+                    ExperienceManager.loadExperience(player);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
