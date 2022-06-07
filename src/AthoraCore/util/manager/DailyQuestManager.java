@@ -53,7 +53,7 @@ public class DailyQuestManager {
             AthoraPlayer.setPurse(player, quest.getMoneyReward() + AthoraPlayer.getPurse(player));
             AthoraPlayer.setRuhm(player, quest.getRuhmReward() + AthoraPlayer.getRuhm(player));
             Helper.createFireworkParticle(player, DyeColor.ORANGE);
-            player.sendMessage("§7<===§l§a Quest abgeschlossen!§7  ===>\n\n§6Du bekommst:\n\n- §a" + quest.getMoneyReward() + "§2$\n- §6" + quest.getRuhmReward() + " §gRuhm\n\n§8--------------------------------");
+            player.sendMessage("§7<===§l§a Quest abgeschlossen!§7  ===>\n\n§6Du bekommst:\n\n§8 - §a" + quest.getMoneyReward() + "§2$\n§8 - §6" + quest.getRuhmReward() + " §gRuhm\n\n§8----------------------------");
         }
     }
 

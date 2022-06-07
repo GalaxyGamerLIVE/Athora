@@ -2,6 +2,7 @@ package AthoraCore.listener;
 
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
+import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.InterestManager;
 import AthoraCore.util.manager.InventoryManager;
 import AthoraCore.util.manager.MineManager;
@@ -31,13 +32,22 @@ public class PlayerJoin implements Listener {
                 event.getPlayer().getInventory().addItem(Item.get(ItemID.BREAD));
             }
             plugin.getServer().getScheduler().scheduleDelayedTask(() -> {
-                event.getPlayer().sendMessage("§6§l Willkommen auf Athora!\n§aDa du neu hier bist, empfehlen wir dir die Anfänger Tipps\nim §9/warp tutorial§a Bereich anzusehen, viel spaß!");
+                event.getPlayer().sendMessage("§l§7------ §aWillkommen auf Athora! §7------§r\n\n" +
+                        "§fDa du neu hier bist, empfehlen wir dir die Anfänger Tipps\n" +
+                        "im §9/warp tutorial§f Bereich anzusehen!\n" +
+                        "\n" +
+                        "§7Indem du auf dem Server spielst stimmst du dem Server §lRegelwerk§r§7 zu.\n" +
+                        "§7Das Regelwerk Findest du in unserem Discord:§f https://discord.gg/rdh5EdEjbm\n" +
+                        "\n" +
+                        "§a§l- Viel Spaß!");
             }, 10);
         }
         PlaytimeManager.trackPlayer(event.getPlayer());
         ScoreboardManager.loadScoreboard(event.getPlayer());
 
         InventoryManager.loadPlayerInventory(plugin, event.getPlayer());
+
+        ExperienceManager.loadExperience(event.getPlayer());
 
         plugin.getServer().getScheduler().scheduleDelayedTask(() -> {
             InterestManager.checkInterest(event.getPlayer(), true);

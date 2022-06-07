@@ -11,7 +11,7 @@ import ru.nukkitx.forms.elements.SimpleForm;
 
 public class DailyQuestForm {
     public DailyQuestForm(Player player) {
-        SimpleForm form = (new SimpleForm("Explorer Finn - Daily Quest")).setContent("§fHey! ich hab hier eine Liste an Sachen, kannst\ndu mir die Besorgen?\n\n§r§7§o(Täglicher Reset um 2:00 Uhr)");
+        SimpleForm form = (new SimpleForm("Explorer Finn - Daily Quest")).setContent("§eHey! ich hab hier eine Liste an Sachen, kannst\ndu mir die Besorgen?\n\n§r§7§o(Täglicher Reset um 2:00 Uhr)");
         Quest[] allQuests = DailyQuestManager.getDailyQuests();
         Quest[] completedQuests = DailyQuestManager.getCompletedQuests(player);
         Quest[] notCompletedQuests = new Quest[]{};

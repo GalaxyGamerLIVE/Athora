@@ -23,6 +23,7 @@ import AthoraCore.listener.PlayerDeath;
 import AthoraCore.listener.PlayerDestroyBlocks;
 import AthoraCore.listener.PlayerFood;
 import AthoraCore.listener.PlayerJoin;
+import AthoraCore.listener.ListenDataPacket;
 import AthoraCore.listener.PlayerQuit;
 import AthoraCore.listener.SeedsGrow;
 import AthoraCore.util.manager.BossBarManager;
@@ -108,6 +109,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new SeedsGrow(this), this);
         pluginManager.registerEvents(new PlayerDeath(this), this);
         pluginManager.registerEvents(new PlayerFood(this), this);
+        pluginManager.registerEvents(new ListenDataPacket(this), this);
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 3000, true);

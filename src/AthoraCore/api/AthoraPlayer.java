@@ -367,4 +367,34 @@ public class AthoraPlayer {
     public static void setPlaytime(UUID uuid, long playtime) {
         DefaultDatabase.update("UPDATE athora_players SET playtime = " + playtime + " WHERE uuid = '" + uuid.toString() + "';");
     }
+
+    public static int getExperienceLevel(Player player) {
+        ResultSet resultSet = DefaultDatabase.query("SELECT experience_level FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        try {
+            if (resultSet.next())
+                return resultSet.getInt("experience_level");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static void setExperienceLevel(Player player, int level) {
+        DefaultDatabase.update("UPDATE athora_players SET experience_level = " + level + " WHERE uuid = '" + player.getUniqueId().toString() + "';");
+    }
+
+    public static int getExperienceValue(Player player) {
+        ResultSet resultSet = DefaultDatabase.query("SELECT experience_value FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        try {
+            if (resultSet.next())
+                return resultSet.getInt("experience_value");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static void setExperienceValue(Player player, int value) {
+        DefaultDatabase.update("UPDATE athora_players SET experience_value = " + value + " WHERE uuid = '" + player.getUniqueId().toString() + "';");
+    }
 }

@@ -9,9 +9,9 @@ import ru.nukkitx.forms.elements.SimpleForm;
 
 public class DailyQuestDetailForm {
     public DailyQuestDetailForm(Player player, Quest quest) {
-        SimpleForm form = new SimpleForm("========>");
-        form.setContent("§fBringe §g" + quest.getAmount() + " " + DailyQuestManager.getItemName(quest) + "§f zu Explorer Finn!\n\n§6Belohnung:\n- §a" + quest
-                .getMoneyReward() + "§2$\n- §6" + quest
+        SimpleForm form = new SimpleForm("§8<======= §l§6Quest§r§8 ========>");
+        form.setContent("§fBringe §g" + quest.getAmount() + " " + DailyQuestManager.getItemName(quest) + "§f zu Explorer Finn!\n\n§6Belohnung:\n§7- §a" + quest
+                .getMoneyReward() + "§2$\n§7- §6" + quest
                 .getRuhmReward() + " §gRuhm");
         form.addButton("§aAnnehmen");
         form.addButton("§cZurück");

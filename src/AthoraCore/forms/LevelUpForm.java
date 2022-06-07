@@ -39,7 +39,11 @@ public class LevelUpForm {
                     AthoraPlayer.setPurse(targetPlayer, AthoraPlayer.getPurse(targetPlayer) - LevelManager.getMoneyRequirement(AthoraPlayer.getLevel(targetPlayer) + 1));
                     int newLevel = AthoraPlayer.getLevel(targetPlayer) + 1;
                     AthoraPlayer.setLevel(targetPlayer, newLevel);
-                    targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du bist jetzt Level " + TextFormat.BLUE + AthoraPlayer.getLevel(targetPlayer) + TextFormat.GREEN + ".");
+//                    targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du bist jetzt Level " + TextFormat.BLUE + AthoraPlayer.getLevel(targetPlayer) + TextFormat.GREEN + ".");
+
+                    StringBuilder message = new StringBuilder();
+                    message.append("§7<===== §l§9Level Up!§r§l§7 =====>\n\n§8- §6Du bist jetzt Level§9 " + newLevel + "§r\n");
+
                     Helper.createFireworkParticle(targetPlayer, DyeColor.CYAN);
 
                     int levelRewardLevel = LevelManager.getLevelRewardLevel(newLevel);
@@ -52,27 +56,34 @@ public class LevelUpForm {
                             for (int i = 0; i < commonCount; i++) {
                                 Server.getInstance().getCommandMap().dispatch(player, "key common " + targetPlayer.getName());
                             }
-                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.WHITE + commonCount + "x Common Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
+                            //targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.WHITE + commonCount + "x Common Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
+                            message.append("§8- §eDu erhälst: " + TextFormat.WHITE + commonCount + "x Common Key\n");
                         }
                         if (rareCount > 0) {
                             for (int i = 0; i < rareCount; i++) {
                                 Server.getInstance().getCommandMap().dispatch(player, "key rare " + targetPlayer.getName());
                             }
-                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.AQUA + rareCount + "x Rare Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
+                            message.append("§8- §eDu erhälst: " + TextFormat.AQUA + rareCount + "x Rare Key\n");
+//                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.AQUA + rareCount + "x Rare Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
                         }
                         if (epicCount > 0) {
                             for (int i = 0; i < epicCount; i++) {
                                 Server.getInstance().getCommandMap().dispatch(player, "key epic " + targetPlayer.getName());
                             }
-                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.DARK_PURPLE + epicCount + "x Epic Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
+                            message.append("§8- §eDu erhälst: " + TextFormat.DARK_PURPLE + epicCount + "x Epic Key\n");
+//                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.DARK_PURPLE + epicCount + "x Epic Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
                         }
                         if (legendaryCount > 0) {
                             for (int i = 0; i < legendaryCount; i++) {
                                 Server.getInstance().getCommandMap().dispatch(player, "key legendary " + targetPlayer.getName());
                             }
-                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.GOLD + legendaryCount + "x Legendary Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
+                            message.append("§8- §eDu erhälst: " + TextFormat.GOLD + legendaryCount + "x Legendary Key\n");
+//                            targetPlayer.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du hast als Belohnung " + TextFormat.GOLD + legendaryCount + "x Legendary Key " + TextFormat.GREEN + "für das Chest Opening bekommen!");
                         }
                     }
+
+                    message.append("§8\n------------------------------");
+                    player.sendMessage(message.toString());
 
                     if (newLevel == 15) {
                         PermissionManager.addPermission(targetPlayer.getUniqueId(), "futureplots.command.merge");

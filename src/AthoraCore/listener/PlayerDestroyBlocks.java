@@ -34,6 +34,9 @@ public class PlayerDestroyBlocks implements Listener {
                 event.setCancelled(true);
                 player.sendMessage(Vars.PREFIX + TextFormat.RED + "Du kannst dieses Item nur auf dem Plot Server benutzten!");
             }
+            if (event.getBlock().getId() == BlockID.LOG || event.getBlock().getId() == BlockID.LOG2) {
+                event.setCancelled(true);
+            }
         }
         if (SecretsManager.setupAddList.containsKey(player)) {
             event.setCancelled(true);
