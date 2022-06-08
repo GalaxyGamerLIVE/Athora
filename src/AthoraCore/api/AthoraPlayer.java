@@ -1,6 +1,7 @@
 package AthoraCore.api;
 
 import AthoraCore.database.DefaultDatabase;
+import AthoraCore.database.ProductionDatabase;
 import AthoraCore.util.Helper;
 import cn.nukkit.Player;
 
@@ -339,7 +340,7 @@ public class AthoraPlayer {
     }
 
     public static long getPlaytime(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        ResultSet resultSet = ProductionDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
             if (resultSet.next())
                 return resultSet.getLong("playtime");
@@ -350,7 +351,7 @@ public class AthoraPlayer {
     }
 
     public static long getPlaytime(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        ResultSet resultSet = ProductionDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
             if (resultSet.next())
                 return resultSet.getLong("playtime");
@@ -361,11 +362,11 @@ public class AthoraPlayer {
     }
 
     public static void setPlaytime(Player player, long playtime) {
-        DefaultDatabase.update("UPDATE athora_players SET playtime = " + playtime + " WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        ProductionDatabase.update("UPDATE athora_players SET playtime = " + playtime + " WHERE uuid = '" + player.getUniqueId().toString() + "';");
     }
 
     public static void setPlaytime(UUID uuid, long playtime) {
-        DefaultDatabase.update("UPDATE athora_players SET playtime = " + playtime + " WHERE uuid = '" + uuid.toString() + "';");
+        ProductionDatabase.update("UPDATE athora_players SET playtime = " + playtime + " WHERE uuid = '" + uuid.toString() + "';");
     }
 
     public static int getExperienceLevel(Player player) {
