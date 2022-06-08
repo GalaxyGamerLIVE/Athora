@@ -87,7 +87,6 @@ public class Main extends PluginBase {
             getLogger().info("Scoreboard Plots Mode aktiviert!");
         }
 
-
         getServer().getCommandMap().register("athoracore", new AthoraCoreCommand(this));
         getServer().getCommandMap().register("build", new BuildCommand(this));
         getServer().getCommandMap().register("levelup", new LevelUpCommand(this));
@@ -112,20 +111,29 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new SeedsGrow(this), this);
         pluginManager.registerEvents(new PlayerDeath(this), this);
         pluginManager.registerEvents(new PlayerFood(this), this);
-        pluginManager.registerEvents(new ListenDataPacket(this), this);
+//        pluginManager.registerEvents(new ListenDataPacket(this), this);
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 3000, true);
+        getServer().getScheduler().scheduleDelayedRepeatingTask(this, () -> {
+            Map<UUID, Player> players = Server.getInstance().getOnlinePlayers();
+            if (!players.isEmpty()) {
+                for (Player player : players.values()) {
+                    ExperienceManager.saveExperience(player);
+                }
+            }
+        }, 0, 12000, true);
 
-        if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.LOBBY_SERVER)) {
-            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 36000);
-        } else if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
-            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 54000);
-        } else if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.DEV_SERVER)) {
-            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 96000);
-        } else {
-            getLogger().error("Cannot find Reload Time for active Server!");
-        }
+
+//        if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.LOBBY_SERVER)) {
+//            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 216000);
+//        } else if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+//            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 218400);
+//        } else if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.DEV_SERVER)) {
+//            getServer().getScheduler().scheduleDelayedTask(new ReloadLoop(), 220000);
+//        } else {
+//            getLogger().error("Cannot find Reload Time for active Server!");
+//        }
 
 
         SecretsManager.loadSecrets();
@@ -140,16 +148,6 @@ public class Main extends PluginBase {
         getLogger().info("Mine wurde erfolgreich erstellt!");
 
         LeaderboardManager.loadLeaderboards(getServer().getDefaultLevel());
-        try {
-            Map<UUID, Player> players = Server.getInstance().getOnlinePlayers();
-            if (!players.isEmpty()) {
-                for (Player player : players.values()) {
-                    ExperienceManager.loadExperience(player);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

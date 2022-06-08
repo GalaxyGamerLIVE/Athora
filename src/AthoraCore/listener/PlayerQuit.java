@@ -2,6 +2,7 @@ package AthoraCore.listener;
 
 import AthoraCore.main.Main;
 import AthoraCore.util.manager.BossBarManager;
+import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.InventoryManager;
 import AthoraCore.util.manager.PlaytimeManager;
 import cn.nukkit.event.EventHandler;
@@ -20,7 +21,9 @@ public class PlayerQuit implements Listener {
         Main.scoreboards.remove(event.getPlayer());
         PlaytimeManager.untrackPlayer(event.getPlayer());
         InventoryManager.savePlayerInventory(event.getPlayer(), this.plugin);
-        if (BossBarManager.playerHasBossBar(event.getPlayer()))
+        if (BossBarManager.playerHasBossBar(event.getPlayer())) {
             BossBarManager.removeBossBar(event.getPlayer());
+        }
+        ExperienceManager.saveExperience(event.getPlayer());
     }
 }
