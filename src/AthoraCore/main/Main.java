@@ -18,6 +18,7 @@ import AthoraCore.database.DefaultDatabase;
 import AthoraCore.database.DevDatabase;
 import AthoraCore.database.GlobalDatabase;
 import AthoraCore.database.ProductionDatabase;
+import AthoraCore.listener.InventoryChange;
 import AthoraCore.listener.PlayerChat;
 import AthoraCore.listener.PlayerDeath;
 import AthoraCore.listener.PlayerDestroyBlocks;
@@ -111,6 +112,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new SeedsGrow(this), this);
         pluginManager.registerEvents(new PlayerDeath(this), this);
         pluginManager.registerEvents(new PlayerFood(this), this);
+        pluginManager.registerEvents(new InventoryChange(this), this);
 //        pluginManager.registerEvents(new ListenDataPacket(this), this);
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);

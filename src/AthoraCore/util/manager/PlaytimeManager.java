@@ -3,6 +3,7 @@ package AthoraCore.util.manager;
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class PlaytimeManager {
             if (!PlaytimeManager.playerTimes.containsKey(player)) {
                 PlaytimeManager.playerTimes.put(player, System.currentTimeMillis());
             } else {
-                Main.getInstance().getLogger().warning("PlaytimeManager try to add a Player to the Map but the Player exists already in the Map.");
+                Server.getInstance().getLogger().warning("PlaytimeManager try to add a Player to the Map but the Player exists already in the Map.");
             }
         } catch (NullPointerException ignored) {
 
@@ -29,7 +30,7 @@ public class PlaytimeManager {
             AthoraPlayer.setPlaytime(player, PlaytimeManager.getTotalPlaytime(player));
             PlaytimeManager.playerTimes.remove(player);
         } else {
-            Main.getInstance().getLogger().warning("PlaytimeManager try to remove a Player from the Map but the Player not exists in the Map.");
+            Server.getInstance().getLogger().warning("PlaytimeManager try to remove a Player from the Map but the Player not exists in the Map.");
         }
     }
 
