@@ -45,6 +45,10 @@ public class PlayerDestroyBlocks implements Listener {
                 event.setCancelled(true);
             }
         }
+        if (player.getInventory().getItemInHand().getId() == 368) { // enderpearl
+            event.setCancelled(true);
+            player.sendMessage(Vars.PREFIX + TextFormat.RED + "Dieses Item ist deaktiviert!");
+        }
         if (SecretsManager.setupAddList.containsKey(player)) {
             event.setCancelled(true);
             if (event.getBlock().getId() == BlockID.SIGN_POST || event.getBlock().getId() == BlockID.WALL_SIGN) {
