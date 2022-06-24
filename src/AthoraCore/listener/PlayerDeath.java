@@ -4,6 +4,7 @@ import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
 import AthoraCore.util.Helper;
 import AthoraCore.util.configs.GeneralConfig;
+import AthoraCore.util.manager.ServerManager;
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onKill(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
+        if (event.getDamager() instanceof Player && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
             Entity entity = event.getEntity();
             if (entity.getHealth() - event.getDamage() <= 0) {
                 Player attacker = (Player) event.getDamager();
