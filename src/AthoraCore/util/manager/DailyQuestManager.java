@@ -30,6 +30,7 @@ public class DailyQuestManager {
             if (entry.getValue().getId() == quest.getItemID() && entry.getValue().getDamage() == quest.getItemMeta()) {
                 if (restAmount - entry.getValue().getCount() > 0) {
                     collectedAmount += entry.getValue().getCount();
+                    restAmount -= entry.getValue().getCount();
                     player.getInventory().clear(entry.getKey());
                 } else if (restAmount - entry.getValue().getCount() == 0) {
                     collectedAmount += entry.getValue().getCount();
