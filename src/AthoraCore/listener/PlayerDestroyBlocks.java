@@ -37,6 +37,13 @@ public class PlayerDestroyBlocks implements Listener {
             if (event.getBlock().getId() == BlockID.LOG || event.getBlock().getId() == BlockID.LOG2) {
                 event.setCancelled(true);
             }
+            int id = player.getInventory().getItemInHand().getId();
+            if (id >= 290 && id <= 294 || id == 747) { // hoes
+                event.setCancelled(true);
+            }
+            if (id == 269 || id == 273 || id == 256 || id == 284 || id == 277 || id == 744) { // shovels
+                event.setCancelled(true);
+            }
         }
         if (SecretsManager.setupAddList.containsKey(player)) {
             event.setCancelled(true);
@@ -84,7 +91,7 @@ public class PlayerDestroyBlocks implements Listener {
 
         if (SecretsManager.setupAddList.containsKey(player) || SecretsManager.setupRemoveList.containsKey(player) || SecretsManager.secrets.containsKey(event.getBlock())) {
             event.setCancelled(true);
-        } else if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)){
+        } else if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
             boolean isGeneralDestroyableBlock = GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1;
             boolean isFarmingBlock = FarmingManager.fieldsContainsField(event.getBlock().getLevel().getBlock((int) event.getBlock().x, (int) (event.getBlock().y - 1), (int) event.getBlock().z), FarmingManager.getPlant(event.getBlock()));
 
