@@ -158,16 +158,23 @@ public class Main extends PluginBase {
             Map<UUID, Player> players = Server.getInstance().getOnlinePlayers();
             if (!players.isEmpty()) {
                 for (Player player : players.values()) {
+                    getLogger().info("Playtime untrack " + player.getName() + " value: " + PlaytimeManager.playerTimes.get(player).toString());
                     PlaytimeManager.untrackPlayer(player);
-                    if (BossBarManager.playerHasBossBar(player))
+                    getLogger().info("Playtime untrack " + player.getName() + " done!");
+                    if (BossBarManager.playerHasBossBar(player)) {
+                        getLogger().info("Remove BossBar for " + player.getName());
                         BossBarManager.removeBossBar(player);
+                        getLogger().info("Remove BossBar DONE for " + player.getName());
+                    }
                     //                    InventoryManager.savePlayerInventory(player, this);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getLogger().info("Player Stuff done!");
         disconnectDatabases();
+        getLogger().info("Disconnect Database done!");
         GeneralDestroyableBlocksManager.renderDefaultView(getServer().getDefaultLevel());
         getLogger().info("GeneralDestroyableBlocks wurde erfolgreich zurückgesetzt!");
         FarmingManager.resetFarms(getServer().getDefaultLevel());

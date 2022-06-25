@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PlaytimeManager {
 
-    private static final Map<Player, Long> playerTimes = new HashMap<>();
+    public static final Map<Player, Long> playerTimes = new HashMap<>();
 
     public static void trackPlayer(Player player) {
         try {
