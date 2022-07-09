@@ -8,6 +8,7 @@ import AthoraCore.commands.GeneralDestroyableBlocksSetupCommand;
 import AthoraCore.commands.GiveMoneyCommand;
 import AthoraCore.commands.LevelUpCommand;
 import AthoraCore.commands.LobbyCommand;
+import AthoraCore.commands.LobbyItemCommand;
 import AthoraCore.commands.MineCommand;
 import AthoraCore.commands.MineFastTravelCommand;
 import AthoraCore.commands.MineSetupCommand;
@@ -102,6 +103,7 @@ public class Main extends PluginBase {
         getServer().getCommandMap().register("plots", new PlotsCommand(this));
         getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
         getServer().getCommandMap().register("daily", new DailyCommand(this));
+        getServer().getCommandMap().register("lobbyitem", new LobbyItemCommand(this));
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(this), this);

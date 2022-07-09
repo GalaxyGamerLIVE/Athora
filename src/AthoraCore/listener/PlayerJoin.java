@@ -5,6 +5,7 @@ import AthoraCore.main.Main;
 import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.InterestManager;
 import AthoraCore.util.manager.InventoryManager;
+import AthoraCore.util.manager.LobbyItemManager;
 import AthoraCore.util.manager.MineManager;
 import AthoraCore.util.manager.PlaytimeManager;
 import AthoraCore.util.manager.ScoreboardManager;
@@ -16,6 +17,8 @@ import cn.nukkit.event.player.PlayerKickEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.utils.TextFormat;
+
+import javax.swing.*;
 
 public class PlayerJoin implements Listener {
 
@@ -58,6 +61,10 @@ public class PlayerJoin implements Listener {
             InventoryManager.loadPlayerInventory(plugin, event.getPlayer());
 
             ExperienceManager.loadExperience(event.getPlayer());
+
+            if (!LobbyItemManager.hasLobbyItem(event.getPlayer())) {
+                LobbyItemManager.setLobbyItem(event.getPlayer());
+            }
 
             plugin.getServer().getScheduler().scheduleDelayedTask(() -> {
                 InterestManager.checkInterest(event.getPlayer(), true);

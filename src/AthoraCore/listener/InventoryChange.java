@@ -2,10 +2,12 @@ package AthoraCore.listener;
 
 import AthoraCore.main.Main;
 import AthoraCore.util.manager.InventoryManager;
+import AthoraCore.util.manager.LobbyItemManager;
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.inventory.InventoryClickEvent;
+import cn.nukkit.event.inventory.InventoryMoveItemEvent;
 import cn.nukkit.event.inventory.InventoryPickupItemEvent;
 import cn.nukkit.event.player.PlayerDropItemEvent;
 
@@ -26,14 +28,29 @@ public class InventoryChange implements Listener {
 
     @EventHandler
     public void onChange(InventoryClickEvent event) {
-        for (Player player : event.getInventory().getViewers()) {
-            InventoryManager.savePlayerInventory(player, plugin);
+        if (LobbyItemManager.isLobbyItem(event.getSourceItem())) {
+            event.setCancelled(true);
+        } else {
+            for (Player player : event.getInventory().getViewers()) {
+                InventoryManager.savePlayerInventory(player, plugin);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onChange(InventoryMoveItemEvent event) {
+        if (LobbyItemManager.isLobbyItem(event.getItem())) {
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onChange(PlayerDropItemEvent event) {
-        InventoryManager.savePlayerInventory(event.getPlayer(), plugin);
+        if (LobbyItemManager.isLobbyItem(event.getItem())) {
+            event.setCancelled(true);
+        } else {
+            InventoryManager.savePlayerInventory(event.getPlayer(), plugin);
+        }
     }
 }
 
