@@ -3,6 +3,7 @@ package AthoraCore.listener;
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
 import AthoraCore.util.Helper;
+import AthoraCore.util.configs.BankConfig;
 import AthoraCore.util.configs.GeneralConfig;
 import AthoraCore.util.manager.ServerManager;
 import cn.nukkit.Player;
@@ -27,6 +28,14 @@ public class PlayerDeath implements Listener {
         if (!GeneralConfig.generalConfig.getStringList("no_keep_inventory_worlds").contains(event.getEntity().getLevelName())) {
             event.setKeepInventory(true);
             event.setKeepExperience(true);
+        }
+        if (!BankConfig.config.getStringList("keep_coins_on_death_worlds").contains(event.getEntity().getLevel().getName())) {
+            double currentPurse = AthoraPlayer.getPurse(event.getEntity());
+            if (currentPurse > 1) {
+                double reduceMoneyAmount = Math.round((currentPurse / 100) * 50);
+                AthoraPlayer.setPurse(event.getEntity(), (currentPurse - reduceMoneyAmount));
+                event.getEntity().sendMessage(TextFormat.RED + "Du hast " + TextFormat.GOLD + reduceMoneyAmount + "$" + TextFormat.RED + " verloren! (Zahle dein Geld auf der Bank ein um nichts zu verlieren!");
+            }
         }
     }
 

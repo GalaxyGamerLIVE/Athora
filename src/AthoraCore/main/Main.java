@@ -1,9 +1,11 @@
 package AthoraCore.main;
 
 import AthoraCore.commands.AthoraCoreCommand;
+import AthoraCore.commands.BankCommand;
 import AthoraCore.commands.BuildCommand;
 import AthoraCore.commands.DailyCommand;
 import AthoraCore.commands.FarmSetupCommand;
+import AthoraCore.commands.GehaltCommand;
 import AthoraCore.commands.GeneralDestroyableBlocksSetupCommand;
 import AthoraCore.commands.GiveMoneyCommand;
 import AthoraCore.commands.LevelUpCommand;
@@ -28,6 +30,7 @@ import AthoraCore.listener.PlayerJoin;
 import AthoraCore.listener.ListenDataPacket;
 import AthoraCore.listener.PlayerQuit;
 import AthoraCore.listener.SeedsGrow;
+import AthoraCore.util.configs.BankConfig;
 import AthoraCore.util.manager.BossBarManager;
 import AthoraCore.util.GameLoop;
 import AthoraCore.util.ItemAPI;
@@ -42,6 +45,7 @@ import AthoraCore.util.manager.LevelManager;
 import AthoraCore.util.manager.MineManager;
 import AthoraCore.util.manager.PlaytimeManager;
 import AthoraCore.util.manager.ReloadLoop;
+import AthoraCore.util.manager.SalaryManager;
 import AthoraCore.util.manager.ScoreboardManager;
 import AthoraCore.util.manager.SecretsManager;
 import AthoraCore.util.manager.ServerManager;
@@ -75,11 +79,13 @@ public class Main extends PluginBase {
         Config foragingConfig = new Config(new File(this.getDataFolder(), "foragingConfig.yml"), Config.YAML);
         Config farmingConfig = new Config(new File(this.getDataFolder(), "farmingConfig.yml"), Config.YAML);
         Config generalBlocksConfig = new Config(new File(this.getDataFolder(), "generalBlocksConfig.yml"), Config.YAML);
+        Config bankConfig = new Config(new File(this.getDataFolder(), "bankConfig.yml"), Config.YAML);
         LevelManager.setLevelConfig(levelConfig);
         MineManager.setMineConfig(mineConfig);
         ForagingManager.setForagingConfig(foragingConfig);
         FarmingManager.config = farmingConfig;
         GeneralDestroyableBlocksManager.setConfig(generalBlocksConfig);
+        BankConfig.setConfig(bankConfig);
 
 //        saveDefaultConfig();
 //        LevelManager.setLevelConfig(getConfig());
@@ -104,6 +110,8 @@ public class Main extends PluginBase {
         getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
         getServer().getCommandMap().register("daily", new DailyCommand(this));
         getServer().getCommandMap().register("lobbyitem", new LobbyItemCommand(this));
+        getServer().getCommandMap().register("gehalt", new GehaltCommand(this));
+        getServer().getCommandMap().register("bank", new BankCommand(this));
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(this), this);
@@ -163,6 +171,7 @@ public class Main extends PluginBase {
                     getLogger().info("Playtime untrack " + player.getName() + " value: " + PlaytimeManager.playerTimes.get(player).toString());
                     PlaytimeManager.untrackPlayer(player);
                     getLogger().info("Playtime untrack " + player.getName() + " done!");
+                    SalaryManager.untrackPlayer(player);
                     if (BossBarManager.playerHasBossBar(player)) {
                         getLogger().info("Remove BossBar for " + player.getName());
                         BossBarManager.removeBossBar(player);

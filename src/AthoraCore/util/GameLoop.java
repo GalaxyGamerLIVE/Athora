@@ -37,6 +37,11 @@ public class GameLoop implements Runnable {
                     ScoreboardManager.loadScoreboard(player);
                     NameTagManager.updateNameTag(player);
                     DailyQuestManager.loadBossBar(player);
+                    if (SalaryManager.reachedMinSalaryTime(player) && !SalaryManager.isSalaryFinished(player)) {
+                        SalaryManager.untrackPlayer(player);
+                        SalaryManager.setPlayerToSalaryFinished(player);
+                        player.sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du kannst jetzt dein Gehalt mit " + TextFormat.BLUE + "/gehalt" + TextFormat.GREEN + " abholen!");
+                    }
                     boolean debug = false;
                     if (debug) {
                         if (AreaProtection.getInstance().getAreaByPos(player.getPosition()) == null) {

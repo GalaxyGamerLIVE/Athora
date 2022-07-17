@@ -2,12 +2,14 @@ package AthoraCore.listener;
 
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.main.Main;
+import AthoraCore.util.Vars;
 import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.InterestManager;
 import AthoraCore.util.manager.InventoryManager;
 import AthoraCore.util.manager.LobbyItemManager;
 import AthoraCore.util.manager.MineManager;
 import AthoraCore.util.manager.PlaytimeManager;
+import AthoraCore.util.manager.SalaryManager;
 import AthoraCore.util.manager.ScoreboardManager;
 import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
@@ -64,6 +66,12 @@ public class PlayerJoin implements Listener {
 
             if (!LobbyItemManager.hasLobbyItem(event.getPlayer())) {
                 LobbyItemManager.setLobbyItem(event.getPlayer());
+            }
+
+            SalaryManager.trackPlayer(event.getPlayer());
+
+            if (SalaryManager.reachedMinSalaryTime(event.getPlayer())) {
+                event.getPlayer().sendMessage(Vars.PREFIX + TextFormat.GREEN + "Du kannst jetzt dein Gehalt mit " + TextFormat.BLUE + "/gehalt" + TextFormat.GREEN + " abholen!");
             }
 
             plugin.getServer().getScheduler().scheduleDelayedTask(() -> {

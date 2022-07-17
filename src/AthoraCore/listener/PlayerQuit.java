@@ -5,6 +5,7 @@ import AthoraCore.util.manager.BossBarManager;
 import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.InventoryManager;
 import AthoraCore.util.manager.PlaytimeManager;
+import AthoraCore.util.manager.SalaryManager;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerQuitEvent;
@@ -21,6 +22,7 @@ public class PlayerQuit implements Listener {
         Main.scoreboards.remove(event.getPlayer());
         PlaytimeManager.untrackPlayer(event.getPlayer());
         InventoryManager.savePlayerInventory(event.getPlayer(), this.plugin);
+        SalaryManager.untrackPlayer(event.getPlayer());
         if (BossBarManager.playerHasBossBar(event.getPlayer())) {
             BossBarManager.removeBossBar(event.getPlayer());
         }
