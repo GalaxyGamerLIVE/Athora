@@ -21,10 +21,9 @@ public class LobbyItemWarpsForm {
         form.addButton("§l§6- Mine -", ImageType.PATH, "textures/items/iron_pickaxe");
         form.addButton("§l§a- Farm §2Gebiet -", ImageType.PATH, "textures/blocks/sapling_oak");
         form.addButton("§l§a$ §2Shop §a$", ImageType.PATH, "textures/blocks/emerald_block");
-        if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
-            form.addButton("§l§g$ §6Bank §g$", ImageType.PATH, "textures/blocks/gold_block");
-        }
+        form.addButton("§l§g$ §6Bank §g$", ImageType.PATH, "textures/blocks/gold_block");
         form.addButton("§l§1- Spawn - ");
+
         form.send(player, (targetPlayer, targetForm, data) -> {
             if (data == -1) return;
             if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
@@ -42,7 +41,10 @@ public class LobbyItemWarpsForm {
                     case 4: // Shop
                         Server.getInstance().getCommandMap().dispatch(targetPlayer, "warp shop");
                         return;
-                    case 5: // Hub Bottom
+                    case 5: // Bank
+                        Server.getInstance().getCommandMap().dispatch(targetPlayer, "warp bank");
+                        return;
+                    case 6: // Hub Bottom
                         Server.getInstance().getCommandMap().dispatch(targetPlayer, "hub");
                         return;
                 }
