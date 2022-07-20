@@ -18,26 +18,24 @@ public class DevDatabase extends AbstractDatabase {
     }
 
     public static boolean isConnected() {
-        if (con != null)
-            return true;
-        return false;
+        return con != null;
     }
 
-    public static ResultSet query(String query) {
+    public static SQLEntity query(String query) {
         try {
             if (con.isClosed())
                 connect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ResultSet resultSet = null;
+        SQLEntity sqlEntity = new SQLEntity();
         try {
-            Statement statement = con.createStatement();
-            resultSet = statement.executeQuery(query);
+            sqlEntity.statement = con.createStatement();
+            sqlEntity.resultSet = sqlEntity.statement.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return resultSet;
+        return sqlEntity;
     }
 
     public static void update(String update) {
@@ -47,12 +45,14 @@ public class DevDatabase extends AbstractDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Statement statement = null;
         try {
-            Statement statement = con.createStatement();
+            statement = con.createStatement();
             statement.executeUpdate(update);
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
     }
 

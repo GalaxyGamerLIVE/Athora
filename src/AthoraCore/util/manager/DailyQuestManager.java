@@ -5,6 +5,7 @@ import AthoraCore.components.Quest;
 import AthoraCore.components.QuestType;
 import AthoraCore.database.DefaultDatabase;
 import AthoraCore.database.GlobalDatabase;
+import AthoraCore.database.SQLEntity;
 import AthoraCore.util.Helper;
 import AthoraCore.util.Vars;
 import cn.nukkit.Player;
@@ -91,24 +92,32 @@ public class DailyQuestManager {
     }
 
     public static int getActiveQuestGivenAmount(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT given_amount FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 0;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT given_amount FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 0;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("given_amount");
+            if (sqlEntity.resultSet.next()) {
+                int amount = sqlEntity.resultSet.getInt("given_amount");
+                sqlEntity.close();
+                return amount;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static Quest getActiveQuest(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT quest_id FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 0;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT quest_id FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 0;");
         try {
-            if (resultSet.next())
-                return getQuest(resultSet.getInt("quest_id"));
+            if (sqlEntity.resultSet.next()) {
+                Quest quest = getQuest(sqlEntity.resultSet.getInt("quest_id"));
+                sqlEntity.close();
+                return quest;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return null;
     }
 
@@ -125,22 +134,26 @@ public class DailyQuestManager {
     }
 
     public static boolean hasActiveQuest(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT id FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 0;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT id FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 0;");
         try {
-            if (resultSet.next())
+            if (sqlEntity.resultSet.next()) {
+                sqlEntity.close();
                 return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return false;
     }
 
     public static Quest[] getCompletedQuests(Player player) {
         Quest[] quests = new Quest[]{};
-        ResultSet resultSet = DefaultDatabase.query("SELECT quest_id FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 1;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT quest_id FROM athora_quest_tracker WHERE player_id = " + AthoraPlayer.getPlayerID(player) + " AND done = 1;");
         try {
-            while (resultSet.next())
-                quests = Helper.append(quests, getQuest(resultSet.getInt("quest_id")));
+            while (sqlEntity.resultSet.next()) {
+                quests = Helper.append(quests, getQuest(sqlEntity.resultSet.getInt("quest_id")));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -149,46 +162,58 @@ public class DailyQuestManager {
 
     public static Quest[] getDailyQuests() {
         Quest[] quests = new Quest[]{};
-        ResultSet resultSet = GlobalDatabase.query("SELECT quest_id FROM athora_daily_quest_pool;");
+        SQLEntity sqlEntity = GlobalDatabase.query("SELECT quest_id FROM athora_daily_quest_pool;");
         try {
-            while (resultSet.next())
-                quests = Helper.append(quests, getQuest(resultSet.getInt("quest_id")));
+            while (sqlEntity.resultSet.next()) {
+                quests = Helper.append(quests, getQuest(sqlEntity.resultSet.getInt("quest_id")));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return quests;
     }
 
     public static Quest getQuest(int id) {
-        ResultSet resultSet = GlobalDatabase.query("SELECT * FROM athora_quests WHERE id = " + id + ";");
+        SQLEntity sqlEntity = GlobalDatabase.query("SELECT * FROM athora_quests WHERE id = " + id + ";");
         try {
-            if (resultSet.next())
-                return new Quest(resultSet
-                        .getInt("id"),
-                        getQuestType(resultSet.getInt("type_id")), resultSet
-                        .getString("item_type"), resultSet
-                        .getInt("item_id"), resultSet
-                        .getInt("item_meta"), resultSet
-                        .getInt("amount"), resultSet
-                        .getDouble("reward_money"), resultSet
-                        .getDouble("reward_ruhm"));
+            if (sqlEntity.resultSet.next()) {
+                Quest quest = new Quest(
+                        sqlEntity.resultSet.getInt("id"),
+                        getQuestType(sqlEntity.resultSet.getInt("type_id")),
+                        sqlEntity.resultSet.getString("item_type"),
+                        sqlEntity.resultSet.getInt("item_id"),
+                        sqlEntity.resultSet.getInt("item_meta"),
+                        sqlEntity.resultSet.getInt("amount"),
+                        sqlEntity.resultSet.getDouble("reward_money"),
+                        sqlEntity.resultSet.getDouble("reward_ruhm")
+                );
+                sqlEntity.close();
+                return quest;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return null;
     }
 
     public static QuestType getQuestType(int id) {
-        ResultSet resultSet = GlobalDatabase.query("SELECT * FROM athora_quest_types WHERE id = " + id + ";");
+        SQLEntity sqlEntity = GlobalDatabase.query("SELECT * FROM athora_quest_types WHERE id = " + id + ";");
         try {
-            if (resultSet.next())
-                return new QuestType(resultSet
-                        .getInt("id"), resultSet
-                        .getInt("required_level"), resultSet
-                        .getString("name"));
+            if (sqlEntity.resultSet.next()) {
+                QuestType questType = new QuestType(
+                        sqlEntity.resultSet.getInt("id"),
+                        sqlEntity.resultSet.getInt("required_level"),
+                        sqlEntity.resultSet.getString("name")
+                );
+                sqlEntity.close();
+                return questType;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return null;
     }
 }

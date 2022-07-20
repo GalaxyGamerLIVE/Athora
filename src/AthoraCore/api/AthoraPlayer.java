@@ -2,6 +2,7 @@ package AthoraCore.api;
 
 import AthoraCore.database.DefaultDatabase;
 import AthoraCore.database.ProductionDatabase;
+import AthoraCore.database.SQLEntity;
 import AthoraCore.util.Helper;
 import cn.nukkit.Player;
 
@@ -11,25 +12,34 @@ import java.util.UUID;
 
 public class AthoraPlayer {
     public static boolean isNewPlayer(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT uuid FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT uuid FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return (resultSet.getString("uuid") == null);
+            if (sqlEntity.resultSet.next()) {
+                boolean isNew = sqlEntity.resultSet.getString("uuid") == null;
+                sqlEntity.close();
+                return isNew;
+            }
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            sqlEntity.close();
             return false;
         }
     }
 
     public static boolean isNewPlayer(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT uuid FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT uuid FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
-            if (resultSet.next())
-                return (resultSet.getString("uuid") == null);
+            if (sqlEntity.resultSet.next()) {
+                boolean isNew = sqlEntity.resultSet.getString("uuid") == null;
+                sqlEntity.close();
+                return isNew;
+            }
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return false;
     }
 
@@ -44,35 +54,47 @@ public class AthoraPlayer {
     }
 
     public static String getUUIDbyPlayerName(String playerName) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT uuid FROM athora_players WHERE playername = '" + playerName + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT uuid FROM athora_players WHERE playername = '" + playerName + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getString("uuid");
+            if (sqlEntity.resultSet.next()) {
+                String uuid = sqlEntity.resultSet.getString("uuid");
+                sqlEntity.close();
+                return uuid;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return null;
     }
 
     public static int getPlayerID(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT id FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT id FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("id");
+            if (sqlEntity.resultSet.next()) {
+                int id = sqlEntity.resultSet.getInt("id");
+                sqlEntity.close();
+                return id;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static String getPlayerName(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT playername FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT playername FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getString("playername");
+            if (sqlEntity.resultSet.next()) {
+                String playerName = sqlEntity.resultSet.getString("playername");
+                sqlEntity.close();
+                return playerName;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return "";
     }
 
@@ -85,35 +107,47 @@ public class AthoraPlayer {
     }
 
     public static String getInventory(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT inventory FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT inventory FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getString("inventory");
+            if (sqlEntity.resultSet.next()) {
+                String inventory = sqlEntity.resultSet.getString("inventory");
+                sqlEntity.close();
+                return inventory;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return null;
     }
 
     public static int getLevel(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT level FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT level FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("level");
+            if (sqlEntity.resultSet.next()) {
+                int level = sqlEntity.resultSet.getInt("level");
+                sqlEntity.close();
+                return level;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static int getLevel(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT level FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT level FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("level");
+            if (sqlEntity.resultSet.next()) {
+                int level = sqlEntity.resultSet.getInt("level");
+                sqlEntity.close();
+                return level;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -126,24 +160,32 @@ public class AthoraPlayer {
     }
 
     public static double getRuhm(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT ruhm FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT ruhm FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getDouble("ruhm");
+            if (sqlEntity.resultSet.next()) {
+                double ruhm = sqlEntity.resultSet.getDouble("ruhm");
+                sqlEntity.close();
+                return ruhm;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0.0D;
     }
 
     public static double getRuhm(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT ruhm FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT ruhm FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getDouble("ruhm");
+            if (sqlEntity.resultSet.next()) {
+                double ruhm = sqlEntity.resultSet.getDouble("ruhm");
+                sqlEntity.close();
+                return ruhm;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0.0D;
     }
 
@@ -158,24 +200,32 @@ public class AthoraPlayer {
     }
 
     public static double getPurse(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT purse FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT purse FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getDouble("purse");
+            if (sqlEntity.resultSet.next()) {
+                double purse = sqlEntity.resultSet.getDouble("purse");
+                sqlEntity.close();
+                return purse;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0.0D;
     }
 
     public static double getPurse(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT purse FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT purse FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getDouble("purse");
+            if (sqlEntity.resultSet.next()) {
+                double purse = sqlEntity.resultSet.getDouble("purse");
+                sqlEntity.close();
+                return purse;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0.0D;
     }
 
@@ -190,24 +240,32 @@ public class AthoraPlayer {
     }
 
     public static double getBankMoney(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.money FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.money FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getDouble("money");
+            if (sqlEntity.resultSet.next()) {
+                double money = sqlEntity.resultSet.getDouble("money");
+                sqlEntity.close();
+                return money;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0.0D;
     }
 
     public static double getBankMoney(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.money FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.money FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getDouble("money");
+            if (sqlEntity.resultSet.next()) {
+                double money = sqlEntity.resultSet.getDouble("money");
+                sqlEntity.close();
+                return money;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0.0D;
     }
 
@@ -220,24 +278,32 @@ public class AthoraPlayer {
     }
 
     public static int getBankExperience(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.experience FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.experience FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("experience");
+            if (sqlEntity.resultSet.next()) {
+                int experience = sqlEntity.resultSet.getInt("experience");
+                sqlEntity.close();
+                return experience;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static int getBankExperience(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.experience FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.experience FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("experience");
+            if (sqlEntity.resultSet.next()) {
+                int experience = sqlEntity.resultSet.getInt("experience");
+                sqlEntity.close();
+                return experience;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -250,24 +316,32 @@ public class AthoraPlayer {
     }
 
     public static int getStorageLevel(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.storage_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.storage_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("storage_level");
+            if (sqlEntity.resultSet.next()) {
+                int storageLevel = sqlEntity.resultSet.getInt("storage_level");
+                sqlEntity.close();
+                return storageLevel;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static int getStorageLevel(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.storage_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.storage_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("storage_level");
+            if (sqlEntity.resultSet.next()) {
+                int storageLevel = sqlEntity.resultSet.getInt("storage_level");
+                sqlEntity.close();
+                return storageLevel;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -280,24 +354,32 @@ public class AthoraPlayer {
     }
 
     public static int getSalaryLevel(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.salary_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.salary_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("salary_level");
+            if (sqlEntity.resultSet.next()) {
+                int salaryLevel = sqlEntity.resultSet.getInt("salary_level");
+                sqlEntity.close();
+                return salaryLevel;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static int getSalaryLevel(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.salary_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.salary_level FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("salary_level");
+            if (sqlEntity.resultSet.next()) {
+                int salaryLevel = sqlEntity.resultSet.getInt("salary_level");
+                sqlEntity.close();
+                return salaryLevel;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -310,24 +392,32 @@ public class AthoraPlayer {
     }
 
     public static int getSalaryTime(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.salary_time FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.salary_time FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("salary_time");
+            if (sqlEntity.resultSet.next()) {
+                int time = sqlEntity.resultSet.getInt("salary_time");
+                sqlEntity.close();
+                return time;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static int getSalaryTime(UUID uuid) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT athora_bank.salary_time FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT athora_bank.salary_time FROM athora_bank, athora_players WHERE athora_players.uuid = '" + uuid.toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("salary_time");
+            if (sqlEntity.resultSet.next()) {
+                int time = sqlEntity.resultSet.getInt("salary_time");
+                sqlEntity.close();
+                return time;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -340,24 +430,32 @@ public class AthoraPlayer {
     }
 
     public static long getPlaytime(Player player) {
-        ResultSet resultSet = ProductionDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = ProductionDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getLong("playtime");
+            if (sqlEntity.resultSet.next()) {
+                long playtime = sqlEntity.resultSet.getLong("playtime");
+                sqlEntity.close();
+                return playtime;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0L;
     }
 
     public static long getPlaytime(UUID uuid) {
-        ResultSet resultSet = ProductionDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
+        SQLEntity sqlEntity = ProductionDatabase.query("SELECT playtime FROM athora_players WHERE uuid = '" + uuid.toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getLong("playtime");
+            if (sqlEntity.resultSet.next()) {
+                long playtime = sqlEntity.resultSet.getLong("playtime");
+                sqlEntity.close();
+                return playtime;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0L;
     }
 
@@ -370,13 +468,17 @@ public class AthoraPlayer {
     }
 
     public static int getExperienceLevel(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT experience_level FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT experience_level FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("experience_level");
+            if (sqlEntity.resultSet.next()) {
+                int level = sqlEntity.resultSet.getInt("experience_level");
+                sqlEntity.close();
+                return level;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -385,13 +487,17 @@ public class AthoraPlayer {
     }
 
     public static int getExperienceValue(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT experience_value FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT experience_value FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {
-            if (resultSet.next())
-                return resultSet.getInt("experience_value");
+            if (sqlEntity.resultSet.next()) {
+                int level = sqlEntity.resultSet.getInt("experience_value");
+                sqlEntity.close();
+                return level;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 

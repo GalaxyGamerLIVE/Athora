@@ -1,6 +1,7 @@
 package AthoraCore.util.manager;
 
 import AthoraCore.database.DefaultDatabase;
+import AthoraCore.database.SQLEntity;
 import AthoraCore.util.Helper;
 import AthoraCore.util.Vars;
 import cn.nukkit.Player;
@@ -23,15 +24,17 @@ public class InterestManager {
     }
 
     public static int getLastInterestAmount(Player player) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT last_interest_amount FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT last_interest_amount FROM athora_bank, athora_players WHERE athora_players.uuid = '" + player.getUniqueId().toString() + "' AND athora_bank.id = athora_players.bank_id;");
         try {
-            if (resultSet.next()) {
-                return resultSet.getInt("last_interest_amount");
+            if (sqlEntity.resultSet.next()) {
+                int amount = sqlEntity.resultSet.getInt("last_interest_amount");
+                sqlEntity.close();
+                return amount;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        sqlEntity.close();
         return 0;
     }
 

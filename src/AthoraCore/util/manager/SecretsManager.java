@@ -2,6 +2,7 @@ package AthoraCore.util.manager;
 
 import AthoraCore.api.AthoraPlayer;
 import AthoraCore.database.DefaultDatabase;
+import AthoraCore.database.SQLEntity;
 import AthoraCore.util.Helper;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -32,28 +33,29 @@ public class SecretsManager {
 
     public static void loadSecrets() {
         secrets.clear();
-        ResultSet resultSet = DefaultDatabase.query("SELECT * FROM athora_secrets");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT * FROM athora_secrets");
         try {
-            if (!resultSet.next()) {
+            if (!sqlEntity.resultSet.next()) {
                 Server.getInstance().getLogger().info("Found no Secrets!");
             } else {
                 do {
-                    if (Helper.levelExists(resultSet.getString("world"))) {
-                        Level level = Server.getInstance().getLevelByName(resultSet.getString("world"));
-                        int x = resultSet.getInt("x");
-                        int y = resultSet.getInt("y");
-                        int z = resultSet.getInt("z");
-                        int ruhmReward = resultSet.getInt("ruhm");
-                        int coinsReward = resultSet.getInt("coins");
+                    if (Helper.levelExists(sqlEntity.resultSet.getString("world"))) {
+                        Level level = Server.getInstance().getLevelByName(sqlEntity.resultSet.getString("world"));
+                        int x = sqlEntity.resultSet.getInt("x");
+                        int y = sqlEntity.resultSet.getInt("y");
+                        int z = sqlEntity.resultSet.getInt("z");
+                        int ruhmReward = sqlEntity.resultSet.getInt("ruhm");
+                        int coinsReward = sqlEntity.resultSet.getInt("coins");
                         int[] rewards = new int[]{coinsReward, ruhmReward};
                         Block secretBlock = level.getBlock(x, y, z);
                         secrets.put(secretBlock, rewards);
                     }
-                } while (resultSet.next());
+                } while (sqlEntity.resultSet.next());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
     }
 
 //    public static void getAllSecrets() {
@@ -82,9 +84,10 @@ public class SecretsManager {
     public static boolean hasPlayerFoundSecret(Player player, Block secret) {
         int playerId = AthoraPlayer.getPlayerID(player);
         int secretId = getSecretID(secret);
-        ResultSet resultSet = DefaultDatabase.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
         try {
-            if (!resultSet.next()) {
+            if (!sqlEntity.resultSet.next()) {
+                sqlEntity.close();
                 return false;
             } else {
                 return true;
@@ -92,20 +95,24 @@ public class SecretsManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return false;
     }
 
     public static int getPlayerPositionOnSecret(Player player, Block secret) {
         int playerId = AthoraPlayer.getPlayerID(player);
         int secretId = getSecretID(secret);
-        ResultSet resultSet = DefaultDatabase.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT * FROM athora_player_secrets WHERE player_id = " + playerId + " AND secret_id = " + secretId + ";");
         try {
-            if (resultSet.next()) {
-                return resultSet.getInt("position");
+            if (sqlEntity.resultSet.next()) {
+                int position = sqlEntity.resultSet.getInt("position");
+                sqlEntity.close();
+                return position;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
@@ -119,22 +126,27 @@ public class SecretsManager {
     }
 
     public static int getSecretDiscovers(Block secret) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT discovers FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT discovers FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
         try {
-            if (resultSet.next()) {
-                return resultSet.getInt("discovers");
+            if (sqlEntity.resultSet.next()) {
+                int discovers = sqlEntity.resultSet.getInt("discovers");
+                sqlEntity.close();
+                return discovers;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sqlEntity.close();
         return 0;
     }
 
     public static int getSecretID(Block secret) {
-        ResultSet resultSet = DefaultDatabase.query("SELECT id FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT id FROM athora_secrets WHERE world = '" + secret.getLevel().getName() + "' AND x = " + (int) secret.x + " AND y = " + (int) secret.y + " AND z = " + (int) secret.z + ";");
         try {
-            if (resultSet.next()) {
-                return resultSet.getInt("id");
+            if (sqlEntity.resultSet.next()) {
+                int id = sqlEntity.resultSet.getInt("id");
+                sqlEntity.close();
+                return id;
             }
         } catch (SQLException e) {
             e.printStackTrace();
