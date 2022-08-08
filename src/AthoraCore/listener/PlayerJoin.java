@@ -7,10 +7,10 @@ import AthoraCore.util.manager.ExperienceManager;
 import AthoraCore.util.manager.InterestManager;
 import AthoraCore.util.manager.InventoryManager;
 import AthoraCore.util.manager.LobbyItemManager;
-import AthoraCore.util.manager.MineManager;
 import AthoraCore.util.manager.PlaytimeManager;
 import AthoraCore.util.manager.SalaryManager;
 import AthoraCore.util.manager.ScoreboardManager;
+import AthoraCore.util.manager.ServerManager;
 import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
@@ -36,7 +36,7 @@ public class PlayerJoin implements Listener {
         if (event.getPlayer().getUniqueId().toString().equalsIgnoreCase("120c1baf-8e68-3d00-900a-43ebad0c7987") || event.getPlayer().getUniqueId().toString().equalsIgnoreCase("19af4a06-a42d-37dd-acd1-efa507833851")) {
             event.getPlayer().kick(PlayerKickEvent.Reason.KICKED_BY_ADMIN, "Blacklist");
             Server.getInstance().getLogger().info(event.getPlayer().getName() + " joined but is on blacklist!");
-        } else if (!event.getPlayer().getAddress().equalsIgnoreCase("127.0.0.1")) {
+        } else if (!event.getPlayer().getAddress().equalsIgnoreCase("127.0.0.1") && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.DEV_SERVER)) {
             event.getPlayer().kick(PlayerKickEvent.Reason.KICKED_BY_ADMIN, TextFormat.RED + "§lBenutze den Port 19132!");
         } else {
             if (AthoraPlayer.isNewPlayer(event.getPlayer())) {
