@@ -36,6 +36,7 @@ public class SecretSetupCommand extends PluginCommand<Main> {
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (!sender.hasPermission("athora.secrets.setup.command")) {
             sender.sendMessage(Vars.PREFIX + "Du hast keine Berechtigung diesen Befehl auszuführen!");
+            return false;
         }
         Player player = (Player) sender;
         if (args.length == 0) {

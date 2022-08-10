@@ -34,6 +34,7 @@ public class GeneralDestroyableBlocksSetupCommand extends PluginCommand<Main> {
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (!sender.hasPermission("athora.generalblocks.setup.command")) {
             sender.sendMessage(Vars.PREFIX + "Du hast keine Berechtigung diesen Befehl auszuführen!");
+            return false;
         }
         Player player = (Player) sender;
         StringBuilder helpMessage = new StringBuilder(Vars.PREFIX + TextFormat.RED + "Benutze: /generalblockssetup [");
