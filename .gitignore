@@ -3,3 +3,5 @@ AthoraCore.iml
 out/
 todos.txt
 de.dic
+libs/
+target/

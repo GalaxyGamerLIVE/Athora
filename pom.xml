@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.athora-mine.de</groupId>
+    <artifactId>AthoraCore</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>nukkit-repo</id>
+            <url>https://repo.nukkitx.com/maven-snapshots</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.powernukkitx</groupId>
+            <artifactId>powernukkitx</artifactId>
+            <version>1.6.0.0-PNX</version>
+        </dependency>
+        <dependency>
+            <groupId>tim03we.futureplots</groupId>
+            <artifactId>FuturePlots</artifactId>
+            <version>2.0.1.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/FuturePlots-2.0.1.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.luckperms.api</groupId>
+            <artifactId>LuckPerms-Nukkit</artifactId>
+            <version>5.4.41</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/LuckPerms-Nukkit-5.4.41.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.llamagames.AreaProtection</groupId>
+            <artifactId>AreaProtection</artifactId>
+            <version>2.0.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/AreaProtection-2.0.4-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>de.lucgameshd</groupId>
+            <artifactId>ScoreboardAPI</artifactId>
+            <version>2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/ScoreboardAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ru.nukkitx</groupId>
+            <artifactId>FormAPI</artifactId>
+            <version>2.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/FormAPI.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${maven.compiler.encoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
