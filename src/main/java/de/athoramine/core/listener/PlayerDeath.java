@@ -40,7 +40,7 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onKill(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+        if (event.getDamager() instanceof Player && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER) && !(event.getEntity() instanceof Player)) {
             Entity entity = event.getEntity();
             if (entity.getHealth() - event.getDamage() <= 0) {
                 Player attacker = (Player) event.getDamager();

@@ -4,8 +4,3 @@ version: "1.0.0"
 api: ["1.0.14"]
 author: GalaxyGamer
 description: Athora Core Plugin
-#de.athoramine.core.commands:
-#  athoracore:
-#    description: "Verändere Werte im Core System direkt im Spiel!"
-#    permission: "athora.core.de.athoramine.core.api.de.athoramine.core.commands"
-#    permission-message: "Du hast keine Berechtigung den Befehl auszuführen!"

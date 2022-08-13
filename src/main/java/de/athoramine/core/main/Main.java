@@ -1,5 +1,7 @@
 package de.athoramine.core.main;
 
+import cn.nukkit.item.Item;
+import cn.nukkit.plugin.PluginLogger;
 import de.athoramine.core.commands.AthoraCoreCommand;
 import de.athoramine.core.commands.BankCommand;
 import de.athoramine.core.commands.BuildCommand;
@@ -17,6 +19,8 @@ import de.athoramine.core.commands.MineSetupCommand;
 import de.athoramine.core.commands.PlotsCommand;
 import de.athoramine.core.commands.SecretSetupCommand;
 import de.athoramine.core.commands.SecretsCommand;
+import de.athoramine.core.custom.items.tools.OpPickaxe;
+import de.athoramine.core.custom.items.tools.TestSword;
 import de.athoramine.core.database.DefaultDatabase;
 import de.athoramine.core.database.DevDatabase;
 import de.athoramine.core.database.GlobalDatabase;
@@ -54,6 +58,7 @@ import cn.nukkit.utils.Config;
 import de.theamychan.scoreboard.network.Scoreboard;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -65,6 +70,19 @@ public class Main extends PluginBase {
     private final ItemAPI itemAPI = new ItemAPI();
 
     public static final Map<Player, Scoreboard> scoreboards = new HashMap<>();
+
+    @Override
+    public void onLoad() {
+        PluginLogger log = new PluginLogger(this);
+        try {
+            Item.registerCustomItem(TestSword.class);
+            Item.registerCustomItem(OpPickaxe.class);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            log.info("Register custom items failed!");
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onEnable() {
