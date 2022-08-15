@@ -38,6 +38,9 @@ public class PlayerDestroyBlocks implements Listener {
             if (event.getBlock().getId() == BlockID.LOG || event.getBlock().getId() == BlockID.LOG2) {
                 event.setCancelled(true);
             }
+            if (event.getBlock().getId() == BlockID.TRAPDOOR || event.getBlock().getId() == BlockID.SPRUCE_TRAPDOOR) {
+                event.setCancelled(true);
+            }
             int id = player.getInventory().getItemInHand().getId();
             if (id >= 290 && id <= 294 || id == 747) { // hoes
                 event.setCancelled(true);
