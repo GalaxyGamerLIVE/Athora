@@ -1,4 +1,4 @@
-package de.athoramine.core.forms;
+package de.athoramine.core.forms.DailyQuest;
 
 import de.athoramine.core.components.Quest;
 import de.athoramine.core.util.manager.DailyQuestManager;

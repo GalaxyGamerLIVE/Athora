@@ -3,10 +3,10 @@ package de.athoramine.core.custom.items.tools;
 import cn.nukkit.item.ItemSwordDiamond;
 import cn.nukkit.item.customitem.ItemCustomTool;
 
-public class TestSword extends ItemCustomTool {
+public class AdminSword extends ItemCustomTool {
 
-    public TestSword() {
-        super("athora:admin_sword", "Schwert für Admins", "athora_custom_sword_admin");
+    public AdminSword() {
+        super("athora:admin_sword", "Admin Schwert", "athora_custom_sword_admin");
     }
 
     @Override

@@ -1,7 +1,7 @@
 package de.athoramine.core.listener;
 
 import de.athoramine.core.api.AthoraPlayer;
-import de.athoramine.core.forms.LobbyItemMainForm;
+import de.athoramine.core.forms.LobbyItem.LobbyItemMainForm;
 import de.athoramine.core.main.Main;
 import de.athoramine.core.util.*;
 import de.athoramine.core.util.manager.*;

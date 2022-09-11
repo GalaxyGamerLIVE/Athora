@@ -1,6 +1,6 @@
 package de.athoramine.core.commands;
 
-import de.athoramine.core.forms.BankMainForm;
+import de.athoramine.core.forms.Bank.BankMainForm;
 import de.athoramine.core.main.Main;
 import de.athoramine.core.util.Helper;
 import de.athoramine.core.util.Vars;

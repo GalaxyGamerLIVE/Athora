@@ -1,4 +1,4 @@
-package de.athoramine.core.forms;
+package de.athoramine.core.forms.Secrets;
 
 import de.athoramine.core.util.manager.SecretsManager;
 import cn.nukkit.Player;

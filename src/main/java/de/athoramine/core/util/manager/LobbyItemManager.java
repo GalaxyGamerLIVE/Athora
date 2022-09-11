@@ -20,9 +20,7 @@ public class LobbyItemManager {
 
     public static void setLobbyItem(Player player) {
         int lastHotbarSlot = getLobbyItemSlot(player);
-        Item lobbyItem = new Item(345, 0, 1, "§g§kii§r §6Lobby Item §g§kii");
-        lobbyItem.addEnchantment(Enchantment.getEnchantment(Enchantment.ID_PROTECTION_ALL));
-        lobbyItem.setCustomName("§o§g§kii§r §6Lobby Item §o§g§kii");
+        Item lobbyItem = Item.fromString("athora:lobby_item");
         lobbyItem.setLore("\nÖffnet das Lobby Fenster!");
 
         if (player.getInventory().getItem(lastHotbarSlot).getId() != 0) {
@@ -42,11 +40,22 @@ public class LobbyItemManager {
     public static boolean hasLobbyItem(Player player) {
         int lastHotbarSlot = getLobbyItemSlot(player);
         Item item = player.getInventory().getItem(lastHotbarSlot);
+        if (isOldLobbyItem(item)) {
+            player.getInventory().remove(item);
+            return false;
+        }
         return isLobbyItem(item);
     }
 
-    public static boolean isLobbyItem(Item item) {
+    public static boolean isOldLobbyItem(Item item) {
         if (item.getId() == 345 && item.getCustomName().equals("§o§g§kii§r §6Lobby Item §o§g§kii") && item.hasEnchantment(Enchantment.ID_PROTECTION_ALL)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isLobbyItem(Item item) {
+        if (item.getNamespaceId().equalsIgnoreCase("athora:lobby_item")) {
             return true;
         }
         return false;

@@ -1,4 +1,4 @@
-package de.athoramine.core.forms;
+package de.athoramine.core.forms.LobbyItem;
 
 import de.athoramine.core.util.manager.LobbyItemManager;
 import de.athoramine.core.util.manager.ServerManager;

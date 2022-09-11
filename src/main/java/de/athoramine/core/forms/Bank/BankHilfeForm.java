@@ -1,4 +1,4 @@
-package de.athoramine.core.forms;
+package de.athoramine.core.forms.Bank;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.TextFormat;

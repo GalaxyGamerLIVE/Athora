@@ -1,6 +1,6 @@
 package de.athoramine.core.commands;
 
-import de.athoramine.core.forms.LevelUpForm;
+import de.athoramine.core.forms.LevelUp.LevelUpForm;
 import de.athoramine.core.main.Main;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;

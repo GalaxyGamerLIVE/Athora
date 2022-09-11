@@ -1,6 +1,6 @@
 package de.athoramine.core.commands;
 
-import de.athoramine.core.forms.MineFastTravelForm;
+import de.athoramine.core.forms.MineFastTravel.MineFastTravelForm;
 import de.athoramine.core.main.Main;
 import de.athoramine.core.util.Vars;
 import cn.nukkit.Player;

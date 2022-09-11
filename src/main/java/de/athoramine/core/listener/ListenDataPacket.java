@@ -16,6 +16,7 @@ public class ListenDataPacket implements Listener {
         plugin = main;
     }
 
+    // NOT REGISTERED! Only here for an example the listen packages process. Maybe needed in future
     @EventHandler
     public void onDataPacketSend(DataPacketSendEvent event) {
         if (event.getPacket() instanceof UpdateAttributesPacket) {

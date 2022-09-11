@@ -3,10 +3,10 @@ package de.athoramine.core.custom.items.tools;
 import cn.nukkit.item.ItemPickaxeDiamond;
 import cn.nukkit.item.customitem.ItemCustomTool;
 
-public class OpPickaxe extends ItemCustomTool {
+public class AdminPickaxe extends ItemCustomTool {
 
-    public OpPickaxe() {
-        super("athora:op_pickaxe", "Geile OP Pickaxe", "athora_op_pickaxe");
+    public AdminPickaxe() {
+        super("athora:op_pickaxe", "Admin Spitzhacke", "athora_op_pickaxe");
     }
 
     @Override
@@ -27,6 +27,11 @@ public class OpPickaxe extends ItemCustomTool {
     @Override
     public int getAttackDamage() {
         return 8;
+    }
+
+    @Override
+    public int getDestroySpeeds() {
+        return 1;
     }
 
 }

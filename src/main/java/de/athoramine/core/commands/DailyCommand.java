@@ -1,6 +1,6 @@
 package de.athoramine.core.commands;
 
-import de.athoramine.core.forms.DailyQuestForm;
+import de.athoramine.core.forms.DailyQuest.DailyQuestForm;
 import de.athoramine.core.main.Main;
 import de.athoramine.core.util.Vars;
 import de.athoramine.core.util.manager.DailyQuestManager;

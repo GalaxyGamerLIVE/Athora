@@ -1,4 +1,4 @@
-package de.athoramine.core.forms;
+package de.athoramine.core.forms.LobbyItem;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;

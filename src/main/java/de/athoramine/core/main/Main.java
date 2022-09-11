@@ -19,8 +19,9 @@ import de.athoramine.core.commands.MineSetupCommand;
 import de.athoramine.core.commands.PlotsCommand;
 import de.athoramine.core.commands.SecretSetupCommand;
 import de.athoramine.core.commands.SecretsCommand;
-import de.athoramine.core.custom.items.tools.OpPickaxe;
-import de.athoramine.core.custom.items.tools.TestSword;
+import de.athoramine.core.custom.items.tools.LobbyItem;
+import de.athoramine.core.custom.items.tools.AdminPickaxe;
+import de.athoramine.core.custom.items.tools.AdminSword;
 import de.athoramine.core.database.DefaultDatabase;
 import de.athoramine.core.database.DevDatabase;
 import de.athoramine.core.database.GlobalDatabase;
@@ -73,10 +74,12 @@ public class Main extends PluginBase {
 
     @Override
     public void onLoad() {
+        //load items
         PluginLogger log = new PluginLogger(this);
         try {
-            Item.registerCustomItem(TestSword.class);
-            Item.registerCustomItem(OpPickaxe.class);
+            Item.registerCustomItem(AdminSword.class);
+            Item.registerCustomItem(AdminPickaxe.class);
+            Item.registerCustomItem(LobbyItem.class);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
             log.info("Register custom items failed!");
@@ -88,60 +91,22 @@ public class Main extends PluginBase {
     public void onEnable() {
         Config generalConfig = new Config(new File(this.getDataFolder(), "generalConfig.yml"), Config.YAML);
         GeneralConfig.setGeneralConfig(generalConfig);
-        initDatabases();
-        Config levelConfig = new Config(new File(this.getDataFolder(), "levelConfig.yml"), Config.YAML);
-        Config mineConfig = new Config(new File(this.getDataFolder(), "mineConfig.yml"), Config.YAML);
-        Config foragingConfig = new Config(new File(this.getDataFolder(), "foragingConfig.yml"), Config.YAML);
-        Config farmingConfig = new Config(new File(this.getDataFolder(), "farmingConfig.yml"), Config.YAML);
-        Config generalBlocksConfig = new Config(new File(this.getDataFolder(), "generalBlocksConfig.yml"), Config.YAML);
-        Config bankConfig = new Config(new File(this.getDataFolder(), "bankConfig.yml"), Config.YAML);
-        LevelManager.setLevelConfig(levelConfig);
-        MineManager.setMineConfig(mineConfig);
-        ForagingManager.setForagingConfig(foragingConfig);
-        FarmingManager.config = farmingConfig;
-        GeneralDestroyableBlocksManager.setConfig(generalBlocksConfig);
-        BankConfig.setConfig(bankConfig);
 
-//        saveDefaultConfig();
-//        LevelManager.setLevelConfig(getConfig());
+        initDatabases();
+        initConfigs();
+
+        //TODO check if required plugins enabled
 
         if (getServer().getPluginManager().getPlugin("FuturePlots") != null) {
             ScoreboardManager.plotsEnabled = true;
             getLogger().info("Scoreboard Plots Mode aktiviert!");
         }
 
-        getServer().getCommandMap().register("athoracore", new AthoraCoreCommand(this));
-        getServer().getCommandMap().register("build", new BuildCommand(this));
-        getServer().getCommandMap().register("levelup", new LevelUpCommand(this));
-        getServer().getCommandMap().register("mine", new MineCommand(this));
-        getServer().getCommandMap().register("minefasttravel", new MineFastTravelCommand(this));
-        getServer().getCommandMap().register("minesetup", new MineSetupCommand(this));
-        getServer().getCommandMap().register("farmsetup", new FarmSetupCommand(this));
-        getServer().getCommandMap().register("generalblockssetup", new GeneralDestroyableBlocksSetupCommand(this));
-        getServer().getCommandMap().register("secretsetup", new SecretSetupCommand(this));
-        getServer().getCommandMap().register("secrets", new SecretsCommand(this));
-        getServer().getCommandMap().register("lobby", new LobbyCommand(this));
-        getServer().getCommandMap().register("plots", new PlotsCommand(this));
-        getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
-        getServer().getCommandMap().register("daily", new DailyCommand(this));
-        getServer().getCommandMap().register("lobbyitem", new LobbyItemCommand(this));
-        getServer().getCommandMap().register("gehalt", new GehaltCommand(this));
-        getServer().getCommandMap().register("bank", new BankCommand(this));
+        initCommands();
+        initEvents();
 
-        PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(new PlayerJoin(this), this);
-//        pluginManager.registerEvents(new PlayerMove(this), this);
-        pluginManager.registerEvents(new PlayerQuit(this), this);
-        pluginManager.registerEvents(new PlayerDestroyBlocks(this), this);
-        pluginManager.registerEvents(new PlayerChat(this), this);
-        pluginManager.registerEvents(new SeedsGrow(this), this);
-        pluginManager.registerEvents(new PlayerDeath(this), this);
-        pluginManager.registerEvents(new PlayerFood(this), this);
-        pluginManager.registerEvents(new InventoryChange(this), this);
-//        pluginManager.registerEvents(new ListenDataPacket(this), this);
-
-        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 50, true);
-        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 3000, true);
+        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 20, true); // every second
+        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 600, true); // every 30 seconds
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, () -> {
             Map<UUID, Player> players = Server.getInstance().getOnlinePlayers();
             if (!players.isEmpty()) {
@@ -149,7 +114,7 @@ public class Main extends PluginBase {
                     ExperienceManager.saveExperience(player);
                 }
             }
-        }, 0, 12000, true);
+        }, 0, 12000, true);  // every 10 minutes
 
 
 //        if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.LOBBY_SERVER)) {
@@ -175,6 +140,53 @@ public class Main extends PluginBase {
         getLogger().info("Mine wurde erfolgreich erstellt!");
 
         LeaderboardManager.loadLeaderboards(getServer().getDefaultLevel());
+    }
+
+    private void initConfigs() {
+        Config levelConfig = new Config(new File(this.getDataFolder(), "levelConfig.yml"), Config.YAML);
+        Config mineConfig = new Config(new File(this.getDataFolder(), "mineConfig.yml"), Config.YAML);
+        Config foragingConfig = new Config(new File(this.getDataFolder(), "foragingConfig.yml"), Config.YAML);
+        Config farmingConfig = new Config(new File(this.getDataFolder(), "farmingConfig.yml"), Config.YAML);
+        Config generalBlocksConfig = new Config(new File(this.getDataFolder(), "generalBlocksConfig.yml"), Config.YAML);
+        Config bankConfig = new Config(new File(this.getDataFolder(), "bankConfig.yml"), Config.YAML);
+        LevelManager.setLevelConfig(levelConfig);
+        MineManager.setMineConfig(mineConfig);
+        ForagingManager.setForagingConfig(foragingConfig);
+        FarmingManager.config = farmingConfig;
+        GeneralDestroyableBlocksManager.setConfig(generalBlocksConfig);
+        BankConfig.setConfig(bankConfig);
+    }
+
+    private void initCommands() {
+        getServer().getCommandMap().register("athoracore", new AthoraCoreCommand(this));
+        getServer().getCommandMap().register("build", new BuildCommand(this));
+        getServer().getCommandMap().register("levelup", new LevelUpCommand(this));
+        getServer().getCommandMap().register("mine", new MineCommand(this));
+        getServer().getCommandMap().register("minefasttravel", new MineFastTravelCommand(this));
+        getServer().getCommandMap().register("minesetup", new MineSetupCommand(this));
+        getServer().getCommandMap().register("farmsetup", new FarmSetupCommand(this));
+        getServer().getCommandMap().register("generalblockssetup", new GeneralDestroyableBlocksSetupCommand(this));
+        getServer().getCommandMap().register("secretsetup", new SecretSetupCommand(this));
+        getServer().getCommandMap().register("secrets", new SecretsCommand(this));
+        getServer().getCommandMap().register("lobby", new LobbyCommand(this));
+        getServer().getCommandMap().register("plots", new PlotsCommand(this));
+        getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
+        getServer().getCommandMap().register("daily", new DailyCommand(this));
+        getServer().getCommandMap().register("lobbyitem", new LobbyItemCommand(this));
+        getServer().getCommandMap().register("gehalt", new GehaltCommand(this));
+        getServer().getCommandMap().register("bank", new BankCommand(this));
+    }
+
+    private void initEvents() {
+        PluginManager pluginManager = this.getServer().getPluginManager();
+        pluginManager.registerEvents(new PlayerJoin(this), this);
+        pluginManager.registerEvents(new PlayerQuit(this), this);
+        pluginManager.registerEvents(new PlayerDestroyBlocks(this), this);
+        pluginManager.registerEvents(new PlayerChat(this), this);
+        pluginManager.registerEvents(new SeedsGrow(this), this);
+        pluginManager.registerEvents(new PlayerDeath(this), this);
+        pluginManager.registerEvents(new PlayerFood(this), this);
+        pluginManager.registerEvents(new InventoryChange(this), this);
     }
 
     @Override

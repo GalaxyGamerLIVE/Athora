@@ -1,6 +1,6 @@
 package de.athoramine.core.commands;
 
-import de.athoramine.core.forms.SecretsCollectionForm;
+import de.athoramine.core.forms.Secrets.SecretsCollectionForm;
 import de.athoramine.core.main.Main;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
