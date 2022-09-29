@@ -4,7 +4,7 @@ import cn.nukkit.command.PluginCommand;
 import de.athoramine.core.main.Main;
 import de.athoramine.core.util.manager.BuildManager;
 import de.athoramine.core.util.Vars;
-import de.athoramine.core.util.manager.ServerManager;
+import de.athoramine.core.util.manager.WorldManager;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
@@ -21,11 +21,11 @@ public class BuildCommand extends PluginCommand<Main> {
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         Player player = (Player) sender;
-        if(!player.hasPermission("athora.build.command")) {
+        if (!player.hasPermission("athora.build.command")) {
             player.sendMessage(Vars.PREFIX + TextFormat.RED + "Du hast keine Berechtigung den Befehl auszuführen!");
             return false;
         }
-        if(ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+        if (WorldManager.isInWorld(player, WorldManager.PLOT)) {
             player.sendMessage(Vars.PREFIX + TextFormat.RED + "Der Baumodus ist auf dem Plots Server deaktiviert!");
             return false;
         }

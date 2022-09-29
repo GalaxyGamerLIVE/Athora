@@ -1,7 +1,7 @@
 package de.athoramine.core.forms.Bank;
 
 import de.athoramine.core.util.Vars;
-import de.athoramine.core.util.manager.ServerManager;
+import de.athoramine.core.util.manager.WorldManager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
@@ -15,7 +15,7 @@ public class BankMainForm {
         form.addButton(TextFormat.DARK_GRAY + "[Konto]", ImageType.PATH, "textures/items/gold_ingot");
         form.addButton(TextFormat.DARK_GRAY + "[Gehalt]", ImageType.PATH, "textures/items/book_writable");
 
-        if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+        if (!WorldManager.isInWorld(player, WorldManager.PLOT)) {
             form.addButton(TextFormat.DARK_GRAY + "[XP Lager]", ImageType.PATH, "textures/items/experience_bottle");
         }
 
@@ -26,7 +26,7 @@ public class BankMainForm {
 
             int konto = 0, gehalt = 1, xpLager = 2, hilfe = 3;
 
-            if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+            if (WorldManager.isInWorld(targetPlayer, WorldManager.PLOT)) {
                 hilfe = 2;
                 xpLager = 999999;
             }

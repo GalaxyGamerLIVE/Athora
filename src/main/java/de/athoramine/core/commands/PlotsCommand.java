@@ -1,7 +1,7 @@
 package de.athoramine.core.commands;
 
 import de.athoramine.core.main.Main;
-import de.athoramine.core.util.manager.ServerManager;
+import de.athoramine.core.util.manager.WorldManager;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
@@ -20,7 +20,7 @@ public class PlotsCommand extends PluginCommand<Main> {
             return false;
         }
         Player player = (Player) sender;
-        ServerManager.sendPlayerToServer(player, ServerManager.PLOT_SERVER);
+        WorldManager.sendPlayerToLevel(player, WorldManager.PLOT);
         return true;
     }
 }

@@ -97,10 +97,10 @@ public class Main extends PluginBase {
 
         //TODO check if required plugins enabled
 
-        if (getServer().getPluginManager().getPlugin("FuturePlots") != null) {
-            ScoreboardManager.plotsEnabled = true;
-            getLogger().info("Scoreboard Plots Mode aktiviert!");
-        }
+//        if (getServer().getPluginManager().getPlugin("FuturePlots") != null) {
+//            ScoreboardManager.plotsEnabled = true;
+//            getLogger().info("Scoreboard Plots Mode aktiviert!");
+//        }
 
         initCommands();
         initEvents();
@@ -183,7 +183,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new PlayerQuit(this), this);
         pluginManager.registerEvents(new PlayerDestroyBlocks(this), this);
         pluginManager.registerEvents(new PlayerChat(this), this);
-        pluginManager.registerEvents(new SeedsGrow(this), this);
+//        pluginManager.registerEvents(new SeedsGrow(this), this);
         pluginManager.registerEvents(new PlayerDeath(this), this);
         pluginManager.registerEvents(new PlayerFood(this), this);
         pluginManager.registerEvents(new InventoryChange(this), this);

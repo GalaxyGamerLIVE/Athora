@@ -1,7 +1,7 @@
 package de.athoramine.core.forms.LobbyItem;
 
 import de.athoramine.core.util.manager.LobbyItemManager;
-import de.athoramine.core.util.manager.ServerManager;
+import de.athoramine.core.util.manager.WorldManager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import ru.nukkitx.forms.elements.ImageType;
@@ -12,7 +12,7 @@ public class LobbyItemMainForm {
     public LobbyItemMainForm(Player player) {
         SimpleForm form = new SimpleForm("§o- Lobby Item -");
 
-        if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+        if (WorldManager.isInWorld(player, WorldManager.PLOT)) {
             form.addButton("§l§3- Warps -", ImageType.PATH, "textures/blocks/beacon");
             form.addButton("§l§a$ §2Gehalt §a$\n§r§o§8(Upgrade bei der Bank)", ImageType.PATH, "textures/items/gold_ingot");
             form.addButton("§l§9Level Up\n§r§o§8(Schalte neue Sachen frei)", ImageType.PATH, "textures/items/experience_bottle");
@@ -31,7 +31,7 @@ public class LobbyItemMainForm {
         form.send(player, (targetPlayer, targetForm, data) -> {
             LobbyItemManager.openedForms.remove(player.getUniqueId());
             if (data == -1) return;
-            if (ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+            if (WorldManager.isInWorld(targetPlayer, WorldManager.PLOT)) {
                 switch (data) {
                     case 0: //warps
                         new LobbyItemWarpsForm(targetPlayer);

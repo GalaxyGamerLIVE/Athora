@@ -30,7 +30,7 @@ public class PlayerDestroyBlocks implements Listener {
     @EventHandler
     public void interact(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER) && !BuildManager.getState(player)) {
+        if (!WorldManager.isInWorld(player, WorldManager.PLOT) && !BuildManager.getState(player)) {
             if (player.getInventory().getItemInHand().getId() == ItemID.BUCKET || player.getInventory().getItemInHand().getId() == ItemID.FLINT_AND_STEEL) {
                 event.setCancelled(true);
                 player.sendMessage(Vars.PREFIX + TextFormat.RED + "Du kannst dieses Item nur auf dem Plot Server benutzten!");
@@ -104,7 +104,7 @@ public class PlayerDestroyBlocks implements Listener {
 
         if (SecretsManager.setupAddList.containsKey(player) || SecretsManager.setupRemoveList.containsKey(player) || SecretsManager.secrets.containsKey(event.getBlock())) {
             event.setCancelled(true);
-        } else if (!ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+        } else if (!WorldManager.isInWorld(player, WorldManager.PLOT)) {
             boolean isGeneralDestroyableBlock = GeneralDestroyableBlocksManager.getLocationIndexInStorage(event.getBlock().getLocation()) != -1;
             boolean isFarmingBlock = FarmingManager.fieldsContainsField(event.getBlock().getLevel().getBlock((int) event.getBlock().x, (int) (event.getBlock().y - 1), (int) event.getBlock().z), FarmingManager.getPlant(event.getBlock()));
 
@@ -120,6 +120,7 @@ public class PlayerDestroyBlocks implements Listener {
                         player.sendMessage(Vars.PREFIX + TextFormat.RED + "Der Setup Mode ist momenten für diesen Block aktiviert und kann daher nicht abgebaut werden!");
                     }
                 } else {
+                    //TODO find the cause why its not working anymore
                     if (GeneralDestroyableBlocksManager.placedBlocks.containsKey(event.getBlock()) && GeneralDestroyableBlocksManager.placedBlocks.get(event.getBlock())) {
                         GeneralDestroyableBlocksManager.destroyBlock(player, event.getBlock());
                     } else {
@@ -175,7 +176,7 @@ public class PlayerDestroyBlocks implements Listener {
 //            event.setCancelled(true);
 
 
-            } else if (!this.plugin.getServer().getMotd().equalsIgnoreCase("dev-server") && !this.plugin.getServer().getMotd().equalsIgnoreCase("plots1") && !BuildManager.getState(player)) {
+            } else if (!WorldManager.isInWorld(player, WorldManager.DEV) && !WorldManager.isInWorld(player, WorldManager.PLOT) && !BuildManager.getState(player)) {
                 event.setCancelled(true);
             }
         }
@@ -185,7 +186,7 @@ public class PlayerDestroyBlocks implements Listener {
 
     @EventHandler
     public void blockPlace(BlockPlaceEvent event) {
-        if (!this.plugin.getServer().getMotd().equalsIgnoreCase("dev-server") && !BuildManager.getState(event.getPlayer()) && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER)) {
+        if (!WorldManager.isInWorld(event.getPlayer(), WorldManager.DEV) && !BuildManager.getState(event.getPlayer()) && !WorldManager.isInWorld(event.getPlayer(), WorldManager.PLOT)) {
             event.setCancelled(true);
         }
     }

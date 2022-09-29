@@ -13,8 +13,6 @@ import tim03we.futureplots.utils.Plot;
 
 public class ScoreboardManager {
 
-    public static boolean plotsEnabled = false;
-
     public static void loadScoreboard(Player player) {
         if (player.isOnline()) {
 
@@ -26,9 +24,9 @@ public class ScoreboardManager {
             Scoreboard scoreboard = ScoreboardAPI.createScoreboard();
             ScoreboardDisplay scoreboardDisplay = scoreboard.addDisplay(DisplaySlot.SIDEBAR, "dumy", " §l§gAthora§6-Mine§g.de ");
 
-            scoreboardDisplay.addLine("    §8§o " + Server.getInstance().getOnlinePlayers().size() + "/" + Server.getInstance().getMaxPlayers() + " " + Server.getInstance().getMotd() + " ", 0);
+            scoreboardDisplay.addLine("    §8§o " + Server.getInstance().getOnlinePlayers().size() + "/" + Server.getInstance().getMaxPlayers() + " " + player.getLevelName() + " ", 0);
 
-            if (plotsEnabled) {
+            if (WorldManager.isInWorld(player, WorldManager.PLOT)) {
                 Plot plot = FuturePlots.getInstance().getPlotByPosition(player.getPosition());
                 if (plot != null) {
                     scoreboardDisplay.addLine("   §o§8" + plot.getX() + ":" + plot.getZ() + " " + FuturePlots.provider.getOwner(plot) + "", 1);

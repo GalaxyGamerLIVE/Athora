@@ -5,7 +5,7 @@ import de.athoramine.core.main.Main;
 import de.athoramine.core.util.Helper;
 import de.athoramine.core.util.configs.BankConfig;
 import de.athoramine.core.util.configs.GeneralConfig;
-import de.athoramine.core.util.manager.ServerManager;
+import de.athoramine.core.util.manager.WorldManager;
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.EventHandler;
@@ -40,16 +40,21 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onKill(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && !ServerManager.getCurrentServer().equalsIgnoreCase(ServerManager.PLOT_SERVER) && !(event.getEntity() instanceof Player)) {
-            Entity entity = event.getEntity();
-            if (entity.getHealth() - event.getDamage() <= 0) {
-                Player attacker = (Player) event.getDamager();
-                double ruhmReward = 0.25;
-                AthoraPlayer.setRuhm(attacker, AthoraPlayer.getRuhm(attacker) + ruhmReward);
-                attacker.sendActionBar(TextFormat.GOLD + "+ " + ruhmReward + " Ruhm");
-                Helper.playSound("random.orb", attacker, 0.3f, 0.8f);
+
+        if (event.getDamager() instanceof Player attacker) {
+            if (event.getDamager() instanceof Player && !WorldManager.isInWorld(attacker, WorldManager.PLOT) && !(event.getEntity() instanceof Player)) {
+                Entity entity = event.getEntity();
+                if (entity.getHealth() - event.getDamage() <= 0) {
+                    double ruhmReward = 0.25;
+                    AthoraPlayer.setRuhm(attacker, AthoraPlayer.getRuhm(attacker) + ruhmReward);
+                    attacker.sendActionBar(TextFormat.GOLD + "+ " + ruhmReward + " Ruhm");
+                    Helper.playSound("random.orb", attacker, 0.3f, 0.8f);
+                }
             }
         }
+
+
+
     }
 
 }
