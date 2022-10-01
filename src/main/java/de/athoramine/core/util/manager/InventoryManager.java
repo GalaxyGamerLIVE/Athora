@@ -58,8 +58,10 @@ public class InventoryManager {
     }
 
     public static void savePlayerInventory(Player player, Main plugin) {
-        String inventory = plugin.getItemAPI().invToString(player.getInventory());
-        AthoraPlayer.setInventory(player, inventory);
+        if (player.getInventory() != null) {
+            String inventory = plugin.getItemAPI().invToString(player.getInventory());
+            AthoraPlayer.setInventory(player, inventory);
+        }
     }
 
 }
