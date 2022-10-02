@@ -26,14 +26,7 @@ import de.athoramine.core.database.DefaultDatabase;
 import de.athoramine.core.database.DevDatabase;
 import de.athoramine.core.database.GlobalDatabase;
 import de.athoramine.core.database.ProductionDatabase;
-import de.athoramine.core.listener.InventoryChange;
-import de.athoramine.core.listener.PlayerChat;
-import de.athoramine.core.listener.PlayerDeath;
-import de.athoramine.core.listener.PlayerDestroyBlocks;
-import de.athoramine.core.listener.PlayerFood;
-import de.athoramine.core.listener.PlayerJoin;
-import de.athoramine.core.listener.PlayerQuit;
-import de.athoramine.core.listener.SeedsGrow;
+import de.athoramine.core.listener.*;
 import de.athoramine.core.util.configs.BankConfig;
 import de.athoramine.core.util.manager.BossBarManager;
 import de.athoramine.core.util.GameLoop;
@@ -187,6 +180,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new PlayerDeath(this), this);
         pluginManager.registerEvents(new PlayerFood(this), this);
         pluginManager.registerEvents(new InventoryChange(this), this);
+        pluginManager.registerEvents(new QueryRegenerate(this), this);
     }
 
     @Override

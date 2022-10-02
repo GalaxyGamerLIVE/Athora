@@ -28,8 +28,12 @@ public class LobbyItemWarpsForm {
                 case 0: // Hub
                     Server.getInstance().getCommandMap().dispatch(targetPlayer, "spawn");
                     return;
-                case 1: // Plots
-                    WorldManager.sendPlayerToLevel(targetPlayer, WorldManager.PLOT);
+                case 1: // Lobby - Plots
+                    if (WorldManager.isInWorld(targetPlayer, WorldManager.LOBBY)) {
+                        WorldManager.sendPlayerToLevel(targetPlayer, WorldManager.PLOT);
+                    } else {
+                        WorldManager.sendPlayerToLevel(targetPlayer, WorldManager.LOBBY);
+                    }
                     return;
                 case 2: // Mine
                     Server.getInstance().getCommandMap().dispatch(Server.getInstance().getConsoleSender(), "minefasttravel " + targetPlayer.getName());

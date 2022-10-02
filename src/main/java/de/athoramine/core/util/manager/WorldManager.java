@@ -8,7 +8,7 @@ public class WorldManager {
 
     public static final String LOBBY = "lobby";
     public static final String PLOT = "plots1";
-    public static final String DEV = "lobby";
+    public static final String DEV = "dev";
 
     public static void sendPlayerToLevel(Player player, String levelName) {
         Level destinationLevel = Server.getInstance().getLevelByName(levelName);
