@@ -67,6 +67,21 @@ public class AthoraPlayer {
         return null;
     }
 
+    public static String getPlayerName(int playerID) {
+        SQLEntity sqlEntity = DefaultDatabase.query("SELECT playername FROM athora_players WHERE id = " + playerID + ";");
+        try {
+            if (sqlEntity.resultSet.next()) {
+                String playerName = sqlEntity.resultSet.getString("playername");
+                sqlEntity.close();
+                return playerName;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        sqlEntity.close();
+        return "";
+    }
+
     public static int getPlayerID(Player player) {
         SQLEntity sqlEntity = DefaultDatabase.query("SELECT id FROM athora_players WHERE uuid = '" + player.getUniqueId().toString() + "';");
         try {

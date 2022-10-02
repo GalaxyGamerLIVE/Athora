@@ -1,5 +1,6 @@
 package de.athoramine.core.util;
 
+import de.athoramine.core.components.AthoraFurnace;
 import de.athoramine.core.components.Quest;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -105,6 +106,12 @@ public class Helper {
 
     public static Block[][] append(Block[][] array, Block[] value) {
         Block[][] result = Arrays.copyOf(array, array.length + 1);
+        result[result.length - 1] = value;
+        return result;
+    }
+
+    public static AthoraFurnace[] append(AthoraFurnace[] array, AthoraFurnace value) {
+        AthoraFurnace[] result = Arrays.copyOf(array, array.length + 1);
         result[result.length - 1] = value;
         return result;
     }
