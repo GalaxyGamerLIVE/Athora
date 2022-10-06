@@ -11,7 +11,6 @@ import de.athoramine.core.dialogs.DialogBase;
 import de.athoramine.core.forms.DailyQuest.DailyQuestForm;
 import de.athoramine.core.util.Vars;
 import de.athoramine.core.util.manager.DailyQuestManager;
-import de.athoramine.core.util.manager.MineManager;
 
 public class DailyQuestDetailDialog extends DialogBase {
 
