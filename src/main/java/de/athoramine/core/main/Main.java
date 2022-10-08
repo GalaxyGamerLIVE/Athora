@@ -181,6 +181,7 @@ public class Main extends PluginBase {
         pluginManager.registerEvents(new PlayerFood(this), this);
         pluginManager.registerEvents(new InventoryChange(this), this);
         pluginManager.registerEvents(new QueryRegenerate(this), this);
+        pluginManager.registerEvents(new ListenDataPacket(this), this);
     }
 
     @Override
