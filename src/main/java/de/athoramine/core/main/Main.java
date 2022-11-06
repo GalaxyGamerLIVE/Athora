@@ -2,6 +2,7 @@ package de.athoramine.core.main;
 
 import cn.nukkit.item.Item;
 import cn.nukkit.plugin.PluginLogger;
+import cn.nukkit.scoreboard.scoreboard.Scoreboard;
 import de.athoramine.core.commands.AthoraCoreCommand;
 import de.athoramine.core.commands.BankCommand;
 import de.athoramine.core.commands.BuildCommand;
@@ -49,7 +50,6 @@ import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
-import de.theamychan.scoreboard.network.Scoreboard;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

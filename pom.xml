@@ -61,18 +61,16 @@
             <systemPath>${project.basedir}/libs/AreaProtection-2.0.4-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>de.lucgameshd</groupId>
-            <artifactId>ScoreboardAPI</artifactId>
-            <version>2.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/ScoreboardAPI.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>ru.nukkitx</groupId>
             <artifactId>FormAPI</artifactId>
             <version>2.2</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/FormAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
         </dependency>
     </dependencies>
 
