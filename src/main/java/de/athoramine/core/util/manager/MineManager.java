@@ -1,5 +1,6 @@
 package de.athoramine.core.util.manager;
 
+import cn.nukkit.Server;
 import de.athoramine.core.api.AthoraPlayer;
 import de.athoramine.core.main.Main;
 import de.athoramine.core.util.Helper;
@@ -25,12 +26,12 @@ public class MineManager {
         MineManager.mineConfig = mineConfig;
     }
 
-    public static Vector3 getMineSpawnpoint(int mine, String direction) {
+    public static Position getMineSpawnpoint(int mine, String direction) {
         String[] locationCoords = mineConfig.getString("mine_spawnpoints.mine_" + mine + "." + direction).split(" ");
         double x = Double.parseDouble(locationCoords[0]);
         double y = Double.parseDouble(locationCoords[1]);
         double z = Double.parseDouble(locationCoords[2]);
-        return new Vector3(x, y, z);
+        return new Position(x, y, z, Server.getInstance().getLevelByName("lobby"));
     }
 
     public static double getMineSpawnYaw(int mine, String direction) {
