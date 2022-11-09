@@ -99,7 +99,7 @@ public class Main extends PluginBase {
         initEvents();
 
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new GameLoop(), 0, 20, true); // every second
-        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 600, true); // every 30 seconds
+        getServer().getScheduler().scheduleDelayedRepeatingTask(this, new SlowGameLoop(), 0, 1200, true); // every 60 seconds
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, () -> {
             Map<UUID, Player> players = Server.getInstance().getOnlinePlayers();
             if (!players.isEmpty()) {

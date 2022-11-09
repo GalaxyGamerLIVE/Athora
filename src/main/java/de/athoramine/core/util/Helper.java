@@ -80,6 +80,13 @@ public class Helper {
         return bd.doubleValue();
     }
 
+    // use a list instead of object arrays
+    public static int[] append(int[] array, int value) {
+        int[] result = Arrays.copyOf(array, array.length + 1);
+        result[result.length - 1] = value;
+        return result;
+    }
+
     public static String[] append(String[] array, String value) {
         String[] result = Arrays.copyOf(array, array.length + 1);
         result[result.length - 1] = value;
