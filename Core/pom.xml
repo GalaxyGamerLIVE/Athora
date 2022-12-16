@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.athoramine</groupId>
+        <artifactId>Athora</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>Athora-Core</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.nukkitx</groupId>
+            <artifactId>fakeinventories</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>tim03we.futureplots</groupId>
+            <artifactId>FuturePlots</artifactId>
+            <version>2.0.3.2-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/FuturePlots-2.0.3.2-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.luckperms.api</groupId>
+            <artifactId>LuckPerms-Nukkit</artifactId>
+            <version>5.4.41</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/LuckPerms-Nukkit-5.4.41.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.llamagames.AreaProtection</groupId>
+            <artifactId>AreaProtection</artifactId>
+            <version>2.0.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/AreaProtection-2.0.4-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ru.nukkitx</groupId>
+            <artifactId>FormAPI</artifactId>
+            <version>2.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/FormAPI.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+</project>

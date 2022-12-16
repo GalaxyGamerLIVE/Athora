@@ -1,0 +1,11 @@
+name: AthoraCore
+main: de.athoramine.core.main.Main
+version: "1.0.0"
+api: ["1.0.14"]
+author: GalaxyGamer
+description: Athora Core Plugin
+depend:
+  - FuturePlots
+  - LuckPerms
+  - AreaProtection
+  - FormAPI
